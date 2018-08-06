@@ -13,7 +13,10 @@ The total number of set records is 402 and counting in 18 different themes, the 
 
 The dataset is sets owned by Darren Redmond tracked on [Brickset.com](http://brickset.com/), and it contains the basic information of each set (set id, year, number of pieces, theme, set name, sub theme, price paid, number of mini figures).  
 
+In this version - there are no graphs for the number of mini-figures and no filter for the subtheme.
+
 Data Source: https://brickset.com/sets/ownedby-darrenredmond 
 
 Source Code: https://github.com/darrenredmond/advanced_r/lego
+
 

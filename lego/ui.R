@@ -27,7 +27,7 @@ shinyUI(
         # add a price slide input for the years the lego set were released.
         sliderInput("price", "Price:", min = 0, max = 1000, value = c(0, 1000)),
         # add a pieces slide input for the number of pieces in each lego set.
-        sliderInput("pieces", "Number of Pieces:", sep = "", min = 0, max = 7541, value = c(271, 3000)),
+        sliderInput("pieces", "Number of Pieces:", sep = "", min = 0, max = 7541, value = c(100, 7541)),
         # the id
         uiOutput("themesControl"),
         # add a clear all selection action button
@@ -46,6 +46,12 @@ shinyUI(
             h4('Number of Sets by Year', align = "center"),
             h5('Please hover over each point to see the Year and Total Number of Sets.', align ="center"),
             showOutput("setsByYear", "nvd3"),
+            h4('Price by Year', align = "center"),
+            h5('Please hover over each point to see the Year and Total Price Spent.', align ="center"),
+            showOutput("priceCountByYear", "nvd3"),
+            h4('Number of Pieces by Year', align = "center"),
+            h5('Please hover over each point to see the Year and Total Number of Pieces.', align ="center"),
+            showOutput("piecesCountByYear", "nvd3"),
             h4('Number of Themes by Year', align = "center"),
             h5('Please hover over each bar to see the Year and Total Number of Themes.', align ="center"),
             showOutput("themesByYear", "nvd3"),

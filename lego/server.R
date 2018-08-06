@@ -34,12 +34,22 @@ shinyServer(
       values$themes <- c() # empty list
     })
     
-    # Prepare dataset
+    # Prepare datasets for the different graphs
     dataTable <- reactive({
       groupByTheme(data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes)
     })
-    
+
+    dataTableByPiecesYear <- reactive({
+      groupByPiece(data, input$timeline[1], input$timeline[2],
+        input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes)
+    })
+
+    dataTableByPriceYear <- reactive({
+      groupByPrice(data, input$timeline[1], input$timeline[2],
+        input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes)
+    })
+
     dataTableBySetYear <- reactive({
       groupByYear(data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes)
@@ -79,6 +89,14 @@ shinyServer(
       plotSetsCountByYear(dataTableBySetYear())
     })
     
+    output$priceCountByYear <- renderChart({
+      plotPriceCountByYear(dataTableByPriceYear())
+    })
+
+    output$piecesCountByYear <- renderChart({
+      plotPiecesCountByYear(dataTableByPiecesYear())
+    })
+
     output$themesByYear <- renderChart({
       plotThemesCountByYear(dataTableByYear())
     })

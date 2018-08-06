@@ -91,6 +91,42 @@ groupByYear <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece,
     arrange(year)
 }
 
+#' Group by year to get total count of pieces.
+#' @param dataSet the dataset.
+#' @param minYear the minimum year.
+#' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
+#' @param minPiece the minimum piece count.
+#' @param maxPiece the maximum piece count.
+#' @param themes the themes to include in the filtered dataset.
+#' @return data.table 2 columns
+#'
+groupByPiece <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
+  filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) %>%
+    group_by(year)  %>%
+    summarise(count = sum(pieces)) %>%
+    arrange(year)
+}
+
+#' Group by year to get total price.
+#' @param dataSet the dataset.
+#' @param minYear the minimum year.
+#' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
+#' @param minPiece the minimum piece count.
+#' @param maxPiece the maximum piece count.
+#' @param themes the themes to include in the filtered dataset.
+#' @return data.table 2 columns
+#'
+groupByPrice <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
+  filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) %>%
+    group_by(year)  %>%
+    summarise(count = sum(price)) %>%
+    arrange(year)
+}
+
 #' Group by themes
 #' @param dataSet the dataset.
 #' @param minYear the minimum year.
@@ -182,6 +218,44 @@ plotSetsCountByYear <- function(dataset, dom = "setsByYear",
   setsByYear 
 }
 
+#' Plot number of pieces by year
+#' @param dataset data.table
+#' @param dom
+#' @param xAxisLabel year
+#' @param yAxisLabel number of pieces
+#' @return piecesByYear plot
+plotPiecesCountByYear <- function(dataset, dom = "piecesCountByYear", 
+    xAxisLabel = "Year", yAxisLabel = "Number of Pieces") {
+  tooltipContent <- "#! function(key, x, y, e) {
+  return '<h5><b>Year</b>: ' + e.point.year + '<br>' + '<b>Total Pieces</b>: ' + e.point.count + '<br>'
+  + '</h5>' } !#"
+  piecesCountByYear <- nPlot(count ~ year, data = dataset, type = "multiBarChart", dom = dom, width = 650)
+  piecesCountByYear$chart(margin = list(left = 100))
+  piecesCountByYear$yAxis(axisLabel = yAxisLabel, width = 80)
+  piecesCountByYear$xAxis(axisLabel = xAxisLabel, width = 70)
+  piecesCountByYear$chart(tooltipContent = tooltipContent)
+  piecesCountByYear
+}
+
+#' Plot price by year
+#' @param dataset data.table
+#' @param dom
+#' @param xAxisLabel year
+#' @param yAxisLabel number of pieces
+#' @return piecesByYear plot
+plotPriceCountByYear <- function(dataset, dom = "priceCountByYear", 
+    xAxisLabel = "Year", yAxisLabel = "Price") {
+  tooltipContent <- "#! function(key, x, y, e) {
+  return '<h5><b>Year</b>: ' + e.point.year + '<br>' + '<b>Price</b>: ' + e.point.count + '<br>'
+  + '</h5>' } !#"
+  priceCountByYear <- nPlot(count ~ year, data = dataset, type = "multiBarChart", dom = dom, width = 650)
+  priceCountByYear$chart(margin = list(left = 100))
+  priceCountByYear$yAxis(axisLabel = yAxisLabel, width = 80)
+  priceCountByYear$xAxis(axisLabel = xAxisLabel, width = 70)
+  priceCountByYear$chart(tooltipContent = tooltipContent)
+  priceCountByYear
+}
+
 #' Plot number of themes by year
 #' 
 #' @param dataset data.table
@@ -213,7 +287,7 @@ plotPiecesByYear <- function(dataset, dom = "piecesByYear",
     xAxisLabel = "Year", yAxisLabel = "Number of Pieces") {
   tooltipContent <- "#! function(key, x, y, e) {
     return '<h5><b>Set Name</b>: ' + e.point.name + '<br>'
-        + '<b>Set ID</b>: ' + e.point.setId + '<br>' + '<b>Theme</b>: ' + e.point.theme + '</h5>' } !#"
+        + '<b>Set ID</b>: ' + e.point.setId + '<br>' + '<b>Pieces</b>: ' + e.point.pieces + '</h5>' } !#"
   piecesByYear <- nPlot(pieces ~ year, data = dataset, type = "scatterChart",
     dom = dom, width = 650)
   piecesByYear$chart(margin = list(left = 100), showDistX = TRUE, showDistY = TRUE)
@@ -235,7 +309,7 @@ plotPriceByYear <- function(dataset, dom = "priceByYear",
     xAxisLabel = "Year", yAxisLabel = "Price") {
   tooltipContent <- "#! function(key, x, y, e) {
   return '<h5><b>Set Name</b>: ' + e.point.name + '<br>'
-  + '<b>Set ID</b>: ' + e.point.setId + '<br>' + '<b>Theme</b>: ' + e.point.theme + '</h5>' } !#"
+  + '<b>Set ID</b>: ' + e.point.setId + '<br>' + '<b>Price</b>: ' + e.point.price + '</h5>' } !#"
   priceByYear <- nPlot(price ~ year, data = dataset, type = "scatterChart",
     dom = dom, width = 650)
   priceByYear$chart(margin = list(left = 100), showDistX = TRUE, showDistY = TRUE)

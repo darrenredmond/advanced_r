@@ -61,13 +61,15 @@ filterByYear <- function(dataset, minYear, maxYear) {
 #' @param dataSet the dataset.
 #' @param minYear the minimum year.
 #' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
 #' @param minPiece the minimum piece count.
 #' @param maxPiece the maximum piece count.
 #' @param themes the themes to include in the filtered dataset.
 #' @return the filtered dataset with the filters applied.
 #'
-filterByYearPieceTheme <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) {
-  dataset %>% filter(year >= minYear, year <= maxYear,
+filterByYearPricePieceTheme <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
+  dataset %>% filter(year >= minYear, year <= maxYear, price >= minPrice, price <= maxPrice,
     pieces >= minPiece, pieces <= maxPiece, theme %in% themes) 
 }
 
@@ -75,13 +77,15 @@ filterByYearPieceTheme <- function(dataset, minYear, maxYear, minPiece, maxPiece
 #' @param dataSet the dataset.
 #' @param minYear the minimum year.
 #' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
 #' @param minPiece the minimum piece count.
 #' @param maxPiece the maximum piece count.
 #' @param themes the themes to include in the filtered dataset.
 #' @return the filtered dataset with the filters applied.
 #' 
-groupByYear <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) {
-  filterByYear(dataset, minYear, maxYear) %>% 
+groupByYear <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
+  filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) %>% 
     group_by(year) %>% 
     summarise(total_sets = n_distinct(setId)) %>%
     arrange(year)
@@ -91,13 +95,15 @@ groupByYear <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) {
 #' @param dataSet the dataset.
 #' @param minYear the minimum year.
 #' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
 #' @param minPiece the minimum piece count.
 #' @param maxPiece the maximum piece count.
 #' @param themes the themes to include in the filtered dataset.
 #' @return the filtered dataset with the filters applied.
 #' 
-groupByTheme <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) {
-  datatable(filterByYearPieceTheme(dataset, minYear, maxYear, minPiece, maxPiece, themes),
+groupByTheme <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
+  datatable(filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes),
     options = list(iDisplayLength = 50))
 }
 
@@ -105,12 +111,14 @@ groupByTheme <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) 
 #' @param dataSet the dataset.
 #' @param minYear the minimum year.
 #' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
 #' @param minPiece the minimum piece count.
 #' @param maxPiece the maximum piece count.
 #' @param themes the themes to include in the filtered dataset.
 #' @return data.table 2 columns
 #'
-groupByYearAgg <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) {
+groupByYearAgg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
   filterByYear(dataset, minYear, maxYear) %>% 
     group_by(year)  %>% 
     summarise(count = n_distinct(theme)) %>%
@@ -121,13 +129,15 @@ groupByYearAgg <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes
 #' @param dataSet the dataset.
 #' @param minYear the minimum year.
 #' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
 #' @param minPiece the minimum piece count.
 #' @param maxPiece the maximum piece count.
 #' @param themes the themes to include in the filtered dataset.
 #' @return data.table 2 columns
 #'
-groupByPieceAvg <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) {
-  filterByYearPieceTheme(dataset, minYear, maxYear, minPiece, maxPiece, themes) %>% 
+groupByPieceAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
+  filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) %>% 
     group_by(year) %>% 
     summarise(avg = mean(pieces)) %>%
     arrange(year)
@@ -137,13 +147,15 @@ groupByPieceAvg <- function(dataset, minYear, maxYear, minPiece, maxPiece, theme
 #' @param dataSet the dataset.
 #' @param minYear the minimum year.
 #' @param maxYear the maximum year.
+#' @param minPrice the minimum price count.
+#' @param maxPrice the maximum price count.
 #' @param minPiece the minimum piece count.
 #' @param maxPiece the maximum piece count.
 #' @param themes the themes to include in the filtered dataset.
 #' @return data.table 2 columns
 #'
-groupByPieceThemeAvg <- function(dataset, minYear, maxYear, minPiece, maxPiece, themes) {
-  filterByYearPieceTheme(dataset, minYear, maxYear, minPiece, maxPiece, themes) %>% 
+groupByPieceThemeAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) {
+  filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPiece, maxPiece, themes) %>%
     group_by(theme) %>%
     summarise(avgPieces = mean(pieces)) %>%
     arrange(theme)
@@ -268,3 +280,4 @@ plotPiecesByThemeAvg <- function(dataset, dom = "piecesByThemeAvg",
   piecesByThemeAvg$xAxis(axisLabel = xAxisLabel, width = 200, rotateLabels = -20, height = 200)
   piecesByThemeAvg
 }
+

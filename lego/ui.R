@@ -1,3 +1,6 @@
+# Darren Redmond 92026265 lab 8 - design a shiny app based on my functions for my project.
+# This is the ui.R file which lays out the ui for this n-tier shiny application.
+
 # The user-interface definition of the Shiny web app.
 if (!require('shiny')) install.packages('shiny')
 library(shiny)
@@ -33,7 +36,13 @@ shinyUI(
         # add a clear all selection action button
         actionButton(inputId = "clearAll", label = "Clear selection", icon = icon("square-o")),
         # add a select all action button
-        actionButton(inputId = "selectAll", label = "Select all", icon = icon("check-square-o"))
+        actionButton(inputId = "selectAll", label = "Select all", icon = icon("check-square-o")),
+        # the id
+        uiOutput("subthemesControl"),
+        # add a clear all selection action button
+        actionButton(inputId = "clearAllSub", label = "Clear selection", icon = icon("square-o")),
+        # add a select all action button
+        actionButton(inputId = "selectAllSub", label = "Select all", icon = icon("check-square-o"))
       ),
       # define the main panel for the results output.
       mainPanel(

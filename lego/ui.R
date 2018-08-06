@@ -27,7 +27,7 @@ shinyUI(
         # add a price slide input for the years the lego set were released.
         sliderInput("price", "Price:", min = 0, max = 1000, value = c(0, 1000)),
         # add a pieces slide input for the number of pieces in each lego set.
-        sliderInput("pieces", "Number of Pieces:", sep = "", min = 0, max = 7541, value = c(100, 7541)),
+        sliderInput("pieces", "Number of Pieces:", sep = "", min = 100, max = 7541, value = c(100, 7541)),
         # the id
         uiOutput("themesControl"),
         # add a clear all selection action button

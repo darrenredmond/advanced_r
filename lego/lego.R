@@ -44,7 +44,6 @@ max(data$pieces) # 7591
 min(data$price) # -1
 max(data$price) # 7591
 
-explore_data(data)
 themes <- sort(unique(data$theme))
 
 #' Filter dataset only by year
@@ -209,7 +208,7 @@ plotSetsCountByYear <- function(dataset, dom = "setsByYear",
    return '<h5><b>Year</b>: ' + e.point.year + '<br>' + '<b>Total Sets</b>: '
   + e.point.total_sets + '<br>' + '</h5>' } !#"
   setsByYear <- nPlot(total_sets ~ year, data = dataset, type = "stackedAreaChart",
-    dom = dom, width = 650)
+    dom = dom, width = 600)
   setsByYear$chart(margin = list(left = 100))
   setsByYear$chart(color = c('purple', 'blue', 'green'))
   setsByYear$chart(tooltipContent = tooltipContent)
@@ -229,7 +228,7 @@ plotPiecesCountByYear <- function(dataset, dom = "piecesCountByYear",
   tooltipContent <- "#! function(key, x, y, e) {
   return '<h5><b>Year</b>: ' + e.point.year + '<br>' + '<b>Total Pieces</b>: ' + e.point.count + '<br>'
   + '</h5>' } !#"
-  piecesCountByYear <- nPlot(count ~ year, data = dataset, type = "multiBarChart", dom = dom, width = 650)
+  piecesCountByYear <- nPlot(count ~ year, data = dataset, type = "multiBarChart", dom = dom, width = 600)
   piecesCountByYear$chart(margin = list(left = 100))
   piecesCountByYear$yAxis(axisLabel = yAxisLabel, width = 80)
   piecesCountByYear$xAxis(axisLabel = xAxisLabel, width = 70)
@@ -248,7 +247,7 @@ plotPriceCountByYear <- function(dataset, dom = "priceCountByYear",
   tooltipContent <- "#! function(key, x, y, e) {
   return '<h5><b>Year</b>: ' + e.point.year + '<br>' + '<b>Price</b>: ' + e.point.count + '<br>'
   + '</h5>' } !#"
-  priceCountByYear <- nPlot(count ~ year, data = dataset, type = "multiBarChart", dom = dom, width = 650)
+  priceCountByYear <- nPlot(count ~ year, data = dataset, type = "multiBarChart", dom = dom, width = 600)
   priceCountByYear$chart(margin = list(left = 100))
   priceCountByYear$yAxis(axisLabel = yAxisLabel, width = 80)
   priceCountByYear$xAxis(axisLabel = xAxisLabel, width = 70)
@@ -269,7 +268,7 @@ plotThemesCountByYear <- function(dataset, dom = "themesByYear",
     return '<h5><b>Year</b>: ' + e.point.year + '<br>' + '<b>Total Themes</b>: ' + e.point.count + '<br>'
   + '</h5>' } !#"
   themesByYear <- nPlot(count ~ year, data = dataset, type = "multiBarChart",
-    dom = dom, width = 650)
+    dom = dom, width = 600)
   themesByYear$chart(margin = list(left = 100))
   themesByYear$yAxis(axisLabel = yAxisLabel, width = 80)
   themesByYear$xAxis(axisLabel = xAxisLabel, width = 70)
@@ -289,7 +288,7 @@ plotPiecesByYear <- function(dataset, dom = "piecesByYear",
     return '<h5><b>Set Name</b>: ' + e.point.name + '<br>'
         + '<b>Set ID</b>: ' + e.point.setId + '<br>' + '<b>Pieces</b>: ' + e.point.pieces + '</h5>' } !#"
   piecesByYear <- nPlot(pieces ~ year, data = dataset, type = "scatterChart",
-    dom = dom, width = 650)
+    dom = dom, width = 600)
   piecesByYear$chart(margin = list(left = 100), showDistX = TRUE, showDistY = TRUE)
   piecesByYear$chart(color = c('green', 'orange', 'blue'))
   piecesByYear$chart(tooltipContent = tooltipContent)
@@ -311,7 +310,7 @@ plotPriceByYear <- function(dataset, dom = "priceByYear",
   return '<h5><b>Set Name</b>: ' + e.point.name + '<br>'
   + '<b>Set ID</b>: ' + e.point.setId + '<br>' + '<b>Price</b>: ' + e.point.price + '</h5>' } !#"
   priceByYear <- nPlot(price ~ year, data = dataset, type = "scatterChart",
-    dom = dom, width = 650)
+    dom = dom, width = 600)
   priceByYear$chart(margin = list(left = 100), showDistX = TRUE, showDistY = TRUE)
   priceByYear$chart(color = c('green', 'orange', 'blue'))
   priceByYear$chart(tooltipContent = tooltipContent)
@@ -329,7 +328,7 @@ plotPriceByYear <- function(dataset, dom = "priceByYear",
 #' @return themesByYear plot
 plotPiecesByYearAvg <- function(dataset, dom = "piecesByYearAvg", 
     xAxisLabel = "Year", yAxisLabel = "Number of Pieces") {
-  piecesByYearAvg <- nPlot(avg ~ year, data = dataset, type = "lineChart", dom = dom, width = 650)
+  piecesByYearAvg <- nPlot(avg ~ year, data = dataset, type = "lineChart", dom = dom, width = 600)
   piecesByYearAvg$chart(margin = list(left = 100))
   piecesByYearAvg$chart(color = c('orange', 'blue', 'green'))
   piecesByYearAvg$yAxis(axisLabel = yAxisLabel, width = 80)
@@ -347,7 +346,7 @@ plotPiecesByYearAvg <- function(dataset, dom = "piecesByYearAvg",
 plotPiecesByThemeAvg <- function(dataset, dom = "piecesByThemeAvg", 
     xAxisLabel = "Themes", yAxisLabel = "Number of Pieces") {
   piecesByThemeAvg <- nPlot(avgPieces ~ theme, data = dataset, type = "multiBarChart",
-    dom = dom, width = 650)
+    dom = dom, width = 600)
   piecesByThemeAvg$chart(margin = list(left = 100))
   piecesByThemeAvg$chart(color = c('pink', 'blue', 'green'))
   piecesByThemeAvg$yAxis(axisLabel = yAxisLabel, width = 80)

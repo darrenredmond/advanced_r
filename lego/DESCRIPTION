@@ -13,4 +13,5 @@ Imports:
     magrittr,
     data.table,
     DT,
-    rlang
+    rlang,
+    devtools

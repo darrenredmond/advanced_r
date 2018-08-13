@@ -4,9 +4,9 @@
 if (!require('shiny')) install.packages('shiny')
 library(shiny)
 
-if (!require('lego')) install.packages('lego')
-library(lego)
-#source("R/helper.R")
+#if (!require('lego')) install.packages('lego')
+#library(lego)
+#source("helper.R")
 
 # Load data processing file
 data <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))

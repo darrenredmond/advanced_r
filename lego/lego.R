@@ -16,6 +16,7 @@ source("R/helper.R")
 #devtools::use_package('data.table')
 #devtools::use_package('DT')
 #devtools::use_package('rlang')
+#devtools::use_mit_license()
 
 # Read data
 #data <- read.lego("./inst/extdata/sets.csv")

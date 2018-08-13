@@ -3,8 +3,8 @@ Title: Darren's Lego - Provides helper functions, shiny app, plots/graphs, and s
 Version: 1.0.0.0
 Authors@R: person("Darren", "Redmond", email = "darren.redmond@gmail.com", role = c("aut", "cre"))
 Description: Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
-Depends: R (>= 3.5.1)
-License: MIT License
+Depends: R (>= 3.5.0)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0

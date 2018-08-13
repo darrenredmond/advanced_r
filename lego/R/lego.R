@@ -7,9 +7,9 @@ library(devtools)
 
 createProject <- function(dir, name) {
   setwd(dir)
-  create(name)
+  devtools::create(name)
   setwd(dir + name)
-  document()
+  devtools::document()
   setwd('..')
   devtools::use_package('dplyr')
   devtools::use_package('magrittr')
@@ -18,7 +18,7 @@ createProject <- function(dir, name) {
   devtools::use_package('rlang')
   devtools::use_package('devtools')
   devtools::use_mit_license()
-  install(name)
+  devtools::install(name)
 }
 
 explore <- function(data) {

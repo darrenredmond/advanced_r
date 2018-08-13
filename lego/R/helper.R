@@ -28,7 +28,7 @@ ensureColumn <- function(dataset, oldName, name) {
   } else {
     dataset$temp_lego_col <- NA
     setnames(dataset, 'temp_lego_col', name)
-    print(head(dataset))
+    #print(head(dataset))
   }
 }
 
@@ -37,6 +37,7 @@ ensureColumn <- function(dataset, oldName, name) {
 #' @return the lego brickset lego file.
 #' @export
 #' @importFrom data.table fread
+#' @importFrom rlang .data
 read.lego <- function(file) {
   dataset <- fread(file,fill=TRUE)
   #head(dataset)
@@ -47,11 +48,13 @@ read.lego <- function(file) {
   ensureColumn(dataset, 'Year', 'year')
   ensureColumn(dataset, 'Pieces', 'pieces')
   ensureColumn(dataset, 'USPrice', 'price')
-  print(head(dataset))
-  dataset <- subset(dataset, select=c(theme, name, setId, year, pieces, price, subtheme))
+  #print(head(dataset))
+  dataset <- dataset[,c('theme','name','setId','year','pieces','price','subtheme')]
+  #dataset <- subset(dataset, select=c(theme, name, setId, year,
+  #    pieces, price, subtheme))
   dataset$pieces[is.na(dataset$pieces)] <- 0
   dataset$price[is.na(dataset$price)] <- 0
-  print(head(dataset))
+  #print(head(dataset))
   dataset
 }
 
@@ -97,10 +100,10 @@ filterByYearPricePieceTheme <- function(dataset,
     minPrice=min(dataset$price), maxPrice=max(dataset$price),
     minPieces=min(dataset$pieces), maxPieces=max(dataset$pieces),
     themes=sort(unique(dataset$theme)), subthemes=sort(unique(dataset$subtheme))) {
-  dataset %>% filter(year >= minYear, year <= maxYear,
-      price >= minPrice, price <= maxPrice,
-      pieces >= minPieces, pieces <= maxPieces,
-      theme %in% themes, subtheme %in% subthemes)
+  dataset %>% filter(.data$year >= minYear, .data$year <= maxYear,
+      .data$price >= minPrice, .data$price <= maxPrice,
+      .data$pieces >= minPieces, .data$pieces <= maxPieces,
+      .data$theme %in% themes, .data$subtheme %in% subthemes)
 }
 
 #' Group by year and summarise by set.
@@ -121,12 +124,13 @@ filterByYearPricePieceTheme <- function(dataset,
 #' @importFrom dplyr n_distinct
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 groupByYear <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
   filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
-    group_by(year) %>%
-    summarise(total_sets = n_distinct(setId)) %>%
-    arrange(year)
+    group_by(.data$year) %>%
+    summarise(total_sets = n_distinct(.data$setId)) %>%
+    arrange(.data$year)
 }
 
 #' Group by year to get total count of pieces.
@@ -145,12 +149,13 @@ groupByYear <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 groupByPiece <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
   filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
-    group_by(year)  %>%
-    summarise(count = sum(pieces)) %>%
-    arrange(year)
+    group_by(.data$year)  %>%
+    summarise(count = sum(.data$pieces)) %>%
+    arrange(.data$year)
 }
 
 #' Group by year to get total price.
@@ -169,12 +174,13 @@ groupByPiece <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 groupByPrice <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
   filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
-    group_by(year)  %>%
-    summarise(count = sum(price)) %>%
-    arrange(year)
+    group_by(.data$year)  %>%
+    summarise(count = sum(.data$price)) %>%
+    arrange(.data$year)
 }
 
 #' Group by themes
@@ -213,12 +219,13 @@ groupByTheme <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPiece
 #' @importFrom dplyr n_distinct
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 groupByYearAgg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
   filterByYear(dataset, minYear, maxYear) %>%
-    group_by(year)  %>%
-    summarise(count = n_distinct(theme)) %>%
-    arrange(year)
+    group_by(.data$year)  %>%
+    summarise(count = n_distinct(.data$theme)) %>%
+    arrange(.data$year)
 }
 
 #' Aggregate dataset by year to get total count of average number of pieces.
@@ -237,12 +244,13 @@ groupByYearAgg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPie
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 groupByPieceAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
   filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
-    group_by(year) %>%
-    summarise(avg = mean(pieces)) %>%
-    arrange(year)
+    group_by(.data$year) %>%
+    summarise(avg = mean(.data$pieces)) %>%
+    arrange(.data$year)
 }
 
 #' Average pieces for each theme.
@@ -261,12 +269,13 @@ groupByPieceAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPi
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 groupByPieceThemeAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
   filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
-    group_by(theme) %>%
-    summarise(avgPieces = mean(pieces)) %>%
-    arrange(theme)
+    group_by(.data$theme) %>%
+    summarise(avgPieces = mean(.data$pieces)) %>%
+    arrange(.data$theme)
 }
 
 #' Plot number of sets by year

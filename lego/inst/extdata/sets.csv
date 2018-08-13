@@ -1,4 +1,4 @@
-set_id,year,pieces,t1,descr
+Number,Year,Pieces,Theme,SetName
 00-1,1970,471,Legoland,Weetabix Castle
 0011-2,1978,12,Town,Town Mini-Figures
 0011-3,1987,2,Castle,Castle 2 for 1 Bonus Offer

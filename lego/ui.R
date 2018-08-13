@@ -20,7 +20,7 @@ library(DT)
 # create the shiny ui.
 shinyUI(
   # create the navigation bar page.
-  navbarPage("Darren Redmond's LEGO Sets", 
+  navbarPage("Darren Redmond's LEGO Sets",
     # multi-page user-interface that includes a navigation bar - show the data
     tabPanel("Explore the Data",
       # define the sidebar panel.
@@ -79,6 +79,6 @@ shinyUI(
       )
     ),
     # the about panel which uses markdown to display the about.md file.
-    tabPanel("About", mainPanel(includeMarkdown("about.md")))
+    tabPanel("About", mainPanel(includeMarkdown(system.file('extdata', 'about.md', package ='lego'))))
   )
 )

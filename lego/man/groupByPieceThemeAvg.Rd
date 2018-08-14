@@ -4,8 +4,12 @@
 \alias{groupByPieceThemeAvg}
 \title{Average pieces for each theme.}
 \usage{
-groupByPieceThemeAvg(dataset, minYear, maxYear, minPrice, maxPrice,
-  minPieces, maxPieces, themes, subthemes)
+groupByPieceThemeAvg(dataset, minYear = min(dataset$year),
+  maxYear = max(dataset$year), minPrice = min(dataset$price),
+  maxPrice = max(dataset$price), minPieces = min(dataset$pieces),
+  maxPieces = max(dataset$pieces),
+  themes = sort(unique(dataset$theme)),
+  subthemes = sort(unique(dataset$subtheme)))
 }
 \arguments{
 \item{dataset}{the dataset.}

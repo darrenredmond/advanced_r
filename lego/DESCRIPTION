@@ -15,4 +15,8 @@ Imports:
     DT,
     rlang,
     devtools,
-    rCharts
+    rCharts,
+    shiny,
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr

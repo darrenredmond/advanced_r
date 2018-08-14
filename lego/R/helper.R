@@ -256,7 +256,10 @@ groupByYearAgg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPie
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #'
-groupByPieceAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
+groupByPieceAvg <- function(dataset, minYear=min(dataset$year), maxYear=max(dataset$year),
+    minPrice=min(dataset$price), maxPrice=max(dataset$price),
+    minPieces=min(dataset$pieces), maxPieces=max(dataset$pieces),
+    themes=sort(unique(dataset$theme)), subthemes=sort(unique(dataset$subtheme))) {
   filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
     group_by(.data$year) %>%
     summarise(avg = mean(.data$pieces)) %>%
@@ -281,7 +284,11 @@ groupByPieceAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPi
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #'
-groupByPieceThemeAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
+groupByPieceThemeAvg <- function(dataset,
+    minYear=min(dataset$year), maxYear=max(dataset$year),
+    minPrice=min(dataset$price), maxPrice=max(dataset$price),
+    minPieces=min(dataset$pieces), maxPieces=max(dataset$pieces),
+    themes=sort(unique(dataset$theme)), subthemes=sort(unique(dataset$subtheme))) {
   filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
     group_by(.data$theme) %>%
     summarise(avgPieces = mean(.data$pieces)) %>%
@@ -449,4 +456,15 @@ plotPiecesByThemeAvg <- function(dataset, dom = "piecesByThemeAvg",
   piecesByThemeAvg$yAxis(axisLabel = yAxisLabel, width = 80)
   piecesByThemeAvg$xAxis(axisLabel = xAxisLabel, width = 200, rotateLabels = -20, height = 200)
   piecesByThemeAvg
+}
+
+plotLego <- function(dataset) {
+  plotPiecesByYearAvg(groupByPieceAvg(dataset))
+  #plotPiecesByThemeAvg(groupByPieceThemeAvg(dataset))
+}
+
+#' Run the shiny application.
+#' @importFrom shiny runApp
+runShinyLego <- function() {
+  shiny::runApp('R')
 }

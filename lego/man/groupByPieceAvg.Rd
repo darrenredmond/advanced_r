@@ -4,8 +4,12 @@
 \alias{groupByPieceAvg}
 \title{Aggregate dataset by year to get total count of average number of pieces.}
 \usage{
-groupByPieceAvg(dataset, minYear, maxYear, minPrice, maxPrice, minPieces,
-  maxPieces, themes, subthemes)
+groupByPieceAvg(dataset, minYear = min(dataset$year),
+  maxYear = max(dataset$year), minPrice = min(dataset$price),
+  maxPrice = max(dataset$price), minPieces = min(dataset$pieces),
+  maxPieces = max(dataset$pieces),
+  themes = sort(unique(dataset$theme)),
+  subthemes = sort(unique(dataset$subtheme)))
 }
 \arguments{
 \item{dataset}{the dataset.}

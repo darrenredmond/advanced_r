@@ -4,6 +4,8 @@
 
 if (!require('devtools')) install.packages('devtools')
 library(devtools)
+if (!require('rmarkdown')) install.packages('rmarkdown')
+library(rmarkdown)
 
 createProject <- function(dir, name) {
   setwd(dir)
@@ -18,7 +20,11 @@ createProject <- function(dir, name) {
   devtools::use_package('rlang')
   devtools::use_package('devtools')
   devtools::use_package('rCharts')
+  devtools::use_package('rmarkdown')
+  devtools::use_package('knitr')
+  devtools::use_package('shiny')
   devtools::use_mit_license()
+  devtools::use_vignette(name)
   devtools::install(name)
 }
 
@@ -62,3 +68,5 @@ examples <- function() {
 
 #createProject('~/dev/advanced_r/', 'lego')
 #examples()
+
+#runShinyLego()

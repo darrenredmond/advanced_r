@@ -44,7 +44,6 @@ ensureColumn <- function(dataset, oldName, name) {
 #' @importFrom rlang .data
 read.lego <- function(file) {
   dataset <- fread(file,fill=TRUE)
-  #head(dataset)
   ensureColumn(dataset, 'Theme', 'theme')
   ensureColumn(dataset, 'Subtheme', 'subtheme')
   ensureColumn(dataset, 'SetName', 'name')
@@ -52,13 +51,9 @@ read.lego <- function(file) {
   ensureColumn(dataset, 'Year', 'year')
   ensureColumn(dataset, 'Pieces', 'pieces')
   ensureColumn(dataset, 'USPrice', 'price')
-  #print(head(dataset))
   dataset <- dataset[,c('theme','name','setId','year','pieces','price','subtheme')]
-  #dataset <- subset(dataset, select=c(theme, name, setId, year,
-  #    pieces, price, subtheme))
   dataset$pieces[is.na(dataset$pieces)] <- 0
   dataset$price[is.na(dataset$price)] <- 0
-  #print(head(dataset))
   dataset
 }
 
@@ -256,7 +251,8 @@ groupByYearAgg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPie
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #'
-groupByPieceAvg <- function(dataset, minYear=min(dataset$year), maxYear=max(dataset$year),
+groupByPieceAvg <- function(dataset,
+    minYear=min(dataset$year), maxYear=max(dataset$year),
     minPrice=min(dataset$price), maxPrice=max(dataset$price),
     minPieces=min(dataset$pieces), maxPieces=max(dataset$pieces),
     themes=sort(unique(dataset$theme)), subthemes=sort(unique(dataset$subtheme))) {

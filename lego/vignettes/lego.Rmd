@@ -1,10 +1,10 @@
 ---
-title: " Darren's Lego - Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file"
+title: "lego"
 author: "Darren Redmond"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{lego}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
+Darren's Lego - Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
 
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 

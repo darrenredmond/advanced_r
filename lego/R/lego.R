@@ -25,9 +25,9 @@ createProject <- function(dir, name) {
   devtools::use_package('shiny')
   devtools::use_mit_license()
   devtools::use_vignette(name)
+  devtools::install(build_vignettes = TRUE)
   devtools::install(name)
 }
-
 explore <- function(data) {
   # Exploratory data analysis
   sum(is.na(data$pieces)) # 0
@@ -70,3 +70,10 @@ examples <- function() {
 #examples()
 
 #runShinyLego()
+
+#if (!require('lego')) install.packages('lego')
+#library(lego)
+
+#vignette('lego')
+
+#devtools::install()

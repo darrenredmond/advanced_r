@@ -14,4 +14,5 @@ Imports:
     data.table,
     DT,
     rlang,
-    devtools
+    devtools,
+    rCharts

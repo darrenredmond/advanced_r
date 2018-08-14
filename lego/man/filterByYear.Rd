@@ -4,14 +4,15 @@
 \alias{filterByYear}
 \title{Filter dataset only by year}
 \usage{
-filterByYear(dataset, minYear, maxYear)
+filterByYear(dataset, minYear = min(dataset$year),
+  maxYear = max(dataset$year))
 }
 \arguments{
 \item{dataset}{the dataset.}
 
-\item{minYear}{the minimum year.}
+\item{minYear}{the minimum year. Defaults to be minimum year in the dataset.}
 
-\item{maxYear}{the maximum year.}
+\item{maxYear}{the maximum year. Defaults to be maximum year in the dataset.}
 }
 \value{
 the filtered dataset with the filters applied.
@@ -19,3 +20,11 @@ the filtered dataset with the filters applied.
 \description{
 Filter dataset only by year
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+filterByYear(dataset)
+filterByYear(dataset, 2015)
+filterByYear(dataset, maxYear=2016)
+
+}
+\keyword{lego}

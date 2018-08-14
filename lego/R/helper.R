@@ -4,6 +4,8 @@
 # This is the helper.R file which lays out the helper functions for interfacing with the data in this lego package
 # and the n-tier shiny application.
 
+if (!require('devtools')) install.packages('devtools')
+library(devtools)
 if (!require('dplyr')) install.packages('dplyr')
 library(dplyr)
 if (!require('magrittr')) install.packages('magrittr')
@@ -14,6 +16,8 @@ if (!require('DT')) install.packages('DT')
 library(DT)
 if (!require('rlang')) install.packages('rlang')
 library(rlang)
+if (!require('rCharts')) devtools::install_github('ramnathv/rCharts')
+library(rCharts)
 
 #' Ensure a column exists in the dataset
 #' @param dataset the dataset.
@@ -60,15 +64,21 @@ read.lego <- function(file) {
 
 #' Filter dataset only by year
 #' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
 #' @return the filtered dataset with the filters applied.
+#' @keywords lego
 #' @export
 #' @importFrom dplyr filter
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' filterByYear(dataset)
+#' filterByYear(dataset, 2015)
+#' filterByYear(dataset, maxYear=2016)
 #'
-filterByYear <- function(dataset, minYear, maxYear) {
+filterByYear <- function(dataset, minYear=min(dataset$year), maxYear=max(dataset$year)) {
   dataset %>% filter(.data$year >= minYear, .data$year <= maxYear)
 }
 
@@ -284,6 +294,7 @@ groupByPieceThemeAvg <- function(dataset, minYear, maxYear, minPrice, maxPrice, 
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the number of sets.
 #' @return the setsByYear plot.
+#' @importFrom rCharts nPlot
 plotSetsCountByYear <- function(dataset, dom = "setsByYear",
     xAxisLabel = "Year", yAxisLabel = "Number of Sets") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -305,6 +316,7 @@ plotSetsCountByYear <- function(dataset, dom = "setsByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the number of pieces.
 #' @return the piecesCountByYear plot.
+#' @importFrom rCharts nPlot
 plotPiecesCountByYear <- function(dataset, dom = "piecesCountByYear",
     xAxisLabel = "Year", yAxisLabel = "Number of Pieces") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -324,6 +336,7 @@ plotPiecesCountByYear <- function(dataset, dom = "piecesCountByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the price.
 #' @return the priceCountByYear plot.
+#' @importFrom rCharts nPlot
 plotPriceCountByYear <- function(dataset, dom = "priceCountByYear",
     xAxisLabel = "Year", yAxisLabel = "Price") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -343,6 +356,7 @@ plotPriceCountByYear <- function(dataset, dom = "priceCountByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - number of themes.
 #' @return the themesByYear plot.
+#' @importFrom rCharts nPlot
 plotThemesCountByYear <- function(dataset, dom = "themesByYear",
     xAxisLabel = "Year", yAxisLabel = "Number of Themes") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -363,6 +377,7 @@ plotThemesCountByYear <- function(dataset, dom = "themesByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - number of pieces.
 #' @return the piecesByYear plot.
+#' @importFrom rCharts nPlot
 plotPiecesByYear <- function(dataset, dom = "piecesByYear",
     xAxisLabel = "Year", yAxisLabel = "Number of Pieces") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -385,6 +400,7 @@ plotPiecesByYear <- function(dataset, dom = "piecesByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the price.
 #' @return the priceByYear plot.
+#' @importFrom rCharts nPlot
 plotPriceByYear <- function(dataset, dom = "priceByYear",
     xAxisLabel = "Year", yAxisLabel = "Price") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -406,6 +422,7 @@ plotPriceByYear <- function(dataset, dom = "priceByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - number of pieces.
 #' @return the themesByYear plot.
+#' @importFrom rCharts nPlot
 plotPiecesByYearAvg <- function(dataset, dom = "piecesByYearAvg",
     xAxisLabel = "Year", yAxisLabel = "Number of Pieces") {
   piecesByYearAvg <- nPlot(avg ~ year, data = dataset, type = "lineChart", dom = dom, width = 600)
@@ -422,6 +439,7 @@ plotPiecesByYearAvg <- function(dataset, dom = "piecesByYearAvg",
 #' @param xAxisLabel the x axis label - the themes.
 #' @param yAxisLabel the y axis label - number of pieces.
 #' @return the piecesByThemeAvg plot.
+#' @importFrom rCharts nPlot
 plotPiecesByThemeAvg <- function(dataset, dom = "piecesByThemeAvg",
     xAxisLabel = "Themes", yAxisLabel = "Number of Pieces") {
   piecesByThemeAvg <- nPlot(avgPieces ~ theme, data = dataset, type = "multiBarChart",

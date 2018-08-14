@@ -17,6 +17,7 @@ createProject <- function(dir, name) {
   devtools::use_package('DT')
   devtools::use_package('rlang')
   devtools::use_package('devtools')
+  devtools::use_package('rCharts')
   devtools::use_mit_license()
   devtools::install(name)
 }

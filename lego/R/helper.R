@@ -492,12 +492,14 @@ runShinyLego <- function() {
   shiny::runApp('R')
 }
 
-#' Ggplot count by year
+#' Ggplot count by group
 #' @param dataset the dataset.
 #' @param title the title.
-#' @param xAxisLabel the x axis label - the year.
+#' @param xAxisLabel the x axis label - defaults to the year.
 #' @param yAxisLabel the y axis label - the count.
 #' @param caption the caption.
+#' @param x - defaults to the year.
+#' @param y - defaults to the count.
 #' @return the count by year plot.
 #' @export
 #' @importFrom ggplot2 aes
@@ -509,16 +511,49 @@ runShinyLego <- function() {
 #' @importFrom ggplot2 theme
 #' @importFrom ggplot2 xlab
 #' @importFrom ggplot2 ylab
-ggplotCountByYear <- function(dataset, title="Number per Year",
+ggplotCountByGroup <- function(dataset, title="Number per Year",
     xAxisLabel="Year", yAxisLabel="Number",
-    caption="Source: Darren Redmond's owned dataset") {
-  g <- ggplot(dataset, aes(dataset$year, dataset$count))
+    caption="Source: Darren Redmond's owned dataset",
+    x=dataset$year, y=dataset$count) {
+  g <- ggplot(dataset, aes(x, y))
   g + geom_bar(stat="identity", width=0.5, fill="tomato2") +
     labs(title=title, caption=caption) +
     xlab(xAxisLabel) +
     ylab(yAxisLabel) +
     theme(axis.text.x=element_text(angle=90, vjust=0.5)) +
-    scale_x_continuous(xAxisLabel, labels=as.character(dataset$year), breaks=dataset$year)
+    scale_x_continuous(xAxisLabel, labels=as.character(x), breaks=x)
+}
+
+#' Ggplot count by group with a discrete set of values on the x axis.
+#' @param dataset the dataset.
+#' @param title the title.
+#' @param xAxisLabel the x axis label - defaults to the year.
+#' @param yAxisLabel the y axis label - the count.
+#' @param caption the caption.
+#' @param x - defaults to the year.
+#' @param y - defaults to the count.
+#' @return the count by year plot.
+#' @export
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 scale_x_discrete
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+ggplotCountByGroupDiscrete <- function(dataset, title="Number per Year",
+    xAxisLabel="Year", yAxisLabel="Number",
+    caption="Source: Darren Redmond's owned dataset",
+    x=dataset$year, y=dataset$count) {
+  g <- ggplot(dataset, aes(x, y))
+  g + geom_bar(stat="identity", width=0.5, fill="tomato2") +
+    labs(title=title, caption=caption) +
+    xlab(xAxisLabel) +
+    ylab(yAxisLabel) +
+    theme(axis.text.x=element_text(angle=90, vjust=0.5)) +
+    scale_x_discrete(xAxisLabel, labels=as.character(x), breaks=x)
 }
 
 #' Ggplot number of sets by year
@@ -529,19 +564,10 @@ ggplotCountByYear <- function(dataset, title="Number per Year",
 #' @param caption the caption.
 #' @return the setsByYear plot.
 #' @export
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 element_text
-#' @importFrom ggplot2 geom_bar
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 labs
-#' @importFrom ggplot2 scale_x_continuous
-#' @importFrom ggplot2 theme
-#' @importFrom ggplot2 xlab
-#' @importFrom ggplot2 ylab
 ggplotSetsCountByYear <- function(dataset, title="Number of Sets per Year",
     xAxisLabel="Year", yAxisLabel="Number of Sets",
     caption="Source: Darren Redmond's owned dataset") {
-  ggplotCountByYear(dataset, title, xAxisLabel, yAxisLabel, caption)
+  ggplotCountByGroup(dataset, title, xAxisLabel, yAxisLabel, caption)
 }
 
 #' Ggplot number of pieces by year
@@ -552,19 +578,10 @@ ggplotSetsCountByYear <- function(dataset, title="Number of Sets per Year",
 #' @param caption the caption.
 #' @return the setsByPiecesCount plot.
 #' @export
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 element_text
-#' @importFrom ggplot2 geom_bar
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 labs
-#' @importFrom ggplot2 scale_x_continuous
-#' @importFrom ggplot2 theme
-#' @importFrom ggplot2 xlab
-#' @importFrom ggplot2 ylab
 ggplotPiecesCountByYear <- function(dataset, title="Number of Pieces per Year",
     xAxisLabel="Year", yAxisLabel="Number of Pieces",
     caption="Source: Darren Redmond's owned dataset") {
-  ggplotCountByYear(dataset, title, xAxisLabel, yAxisLabel, caption)
+  ggplotCountByGroup(dataset, title, xAxisLabel, yAxisLabel, caption)
 }
 
 #' Ggplot price by year
@@ -575,19 +592,10 @@ ggplotPiecesCountByYear <- function(dataset, title="Number of Pieces per Year",
 #' @param caption the caption.
 #' @return the setsByPrice plot.
 #' @export
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 element_text
-#' @importFrom ggplot2 geom_bar
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 labs
-#' @importFrom ggplot2 scale_x_continuous
-#' @importFrom ggplot2 theme
-#' @importFrom ggplot2 xlab
-#' @importFrom ggplot2 ylab
 ggplotPriceByYear <- function(dataset, title="Price per Year",
     xAxisLabel="Year", yAxisLabel="Price",
     caption="Source: Darren Redmond's owned dataset") {
-  ggplotCountByYear(dataset, title, xAxisLabel, yAxisLabel, caption)
+  ggplotCountByGroup(dataset, title, xAxisLabel, yAxisLabel, caption)
 }
 
 #' Ggplot number of themes by year
@@ -598,17 +606,22 @@ ggplotPriceByYear <- function(dataset, title="Price per Year",
 #' @param caption the caption.
 #' @return the themesByYear plot.
 #' @export
-#' @importFrom ggplot2 aes
-#' @importFrom ggplot2 element_text
-#' @importFrom ggplot2 geom_bar
-#' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 labs
-#' @importFrom ggplot2 scale_x_continuous
-#' @importFrom ggplot2 theme
-#' @importFrom ggplot2 xlab
-#' @importFrom ggplot2 ylab
 ggplotThemesCountByYear <- function(dataset, title="Number of Themes per Year",
     xAxisLabel="Year", yAxisLabel="Number of Themes",
     caption="Source: Darren Redmond's owned dataset") {
-  ggplotCountByYear(dataset, title, xAxisLabel, yAxisLabel, caption)
+  ggplotCountByGroup(dataset, title, xAxisLabel, yAxisLabel, caption)
+}
+
+#' Ggplot average number of pieces by themes
+#' @param dataset the dataset.
+#' @param title the title.
+#' @param xAxisLabel the x axis label - the theme.
+#' @param yAxisLabel the y axis label - the average number of pieces.
+#' @param caption the caption.
+#' @return the piecesByTheme plot.
+#' @export
+ggplotPieceByTheme <- function(dataset, title="Avg Num of Pieces per Theme",
+    xAxisLabel="Theme", yAxisLabel="Avg Num of Pieces",
+    caption="Source: Darren Redmond's owned dataset") {
+  ggplotCountByGroupDiscrete(dataset, title, xAxisLabel, yAxisLabel, caption, x=dataset$theme, y=dataset$avgPieces)
 }

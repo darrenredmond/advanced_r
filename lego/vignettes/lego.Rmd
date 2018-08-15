@@ -131,6 +131,7 @@ ggplotSetsCountByYear(groupByYear(data))
 ggplotPiecesCountByYear(groupByPiece(data))
 ggplotPriceByYear(groupByPrice(data))
 ggplotThemesCountByYear(groupByTheme(data))
+ggplotPieceByTheme(groupByPieceThemeAvg(data))
 ```
 
 ```{r, fig.show='hold', results='asis', comment=NA}

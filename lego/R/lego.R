@@ -76,4 +76,4 @@ examples <- function() {
 
 #vignette('lego')
 
-#devtools::install()
+#browseVignettes()

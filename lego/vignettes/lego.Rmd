@@ -1,7 +1,7 @@
 ---
 title: "lego"
 author: "Darren Redmond"
-date: "`r Sys.Date()`"
+date: "August 15th, 2018"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lego}
@@ -16,25 +16,61 @@ knitr::opts_chunk$set(
 )
 ```
 
-Darren's Lego - Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
+Darren's lego package provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+So you have created a brickset account and added all of the lego sets that you own to your Brickset account. What next?
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+Well if you download your csv file for either your Owned or Wanted you can use this package to generate summary statistics, interactive plots, provide regression analysis, top 5 sets by value, and even comes with a shiny interactive application that you can analyse your lego collection in an interactive intuitive manner.
 
-## Vignette Info
+## Loading Data
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+So to export your data from Brickset - goto [https://brickset.com/export](https://brickset.com/export) and choose the exported csv file that you would like to export. The owned sets are the ones I started with:
 
-## Styles
+[https://brickset.com/export/mysets/owned/csv](https://brickset.com/export/mysets/owned/csv)
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+For ease of use I've shipped the csv files from my account in the extdata directory as -> brickset-mysets-owned.csv
+and brickset-mysets-wanted.csv
+or all lego sets in the file sets.csv
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+These can be loaded with the code `system.file('extdata', 'brickset-mysets-owned.csv', package ='lego')`
+
+I also a read.lego function which be used to convert the csv file into a dataset which the functions can use:
+
+`lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego')`
+`head(data, 10)`
+
+```{r, echo=FALSE, results='asis'}
+data <- lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+knitr::kable(head(data))
+```
+
+So it can be seen that we have loaded in a dataset with 7 columns, theme, name, setId, year, pieces, price, subthem.
+
+## Filtering Data
+
+The first function created is the function to filter by year. This can be used to filter sets between a year range.
+
+`lego::filterByYear(data, 2004, 2011)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(lego::filterByYear(data, 2004, 2011)))
+```
+
+The parameters are defaulted to the min and max in the dataset so you might call this function with just a min year set:
+
+`lego::filterByYear(data, 2015)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(lego::filterByYear(data, 2015)))
+```
+
+Or, with just a max year set:
+
+`lego::filterByYear(data, maxYear=2011)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(lego::filterByYear(data, maxYear=2011)))
+```
 
 ## Figures
 
@@ -56,12 +92,3 @@ Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr*
 ## More Examples
 
 You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))

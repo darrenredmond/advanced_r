@@ -36,4 +36,12 @@ the filtered dataset with the filters applied.
 \description{
 Group by year and summarise by set.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+groupByYear(dataset)
+groupByYear(dataset, themes=c('Star Wars'))
+groupByYear(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+groupByYear(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
+
+}
 \keyword{lego}

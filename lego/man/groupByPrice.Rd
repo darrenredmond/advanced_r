@@ -36,3 +36,11 @@ data.table 2 columns
 \description{
 Group by year to get total price.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+groupByPrice(dataset)
+groupByPrice(dataset, themes=c('Star Wars'))
+groupByPrice(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+groupByPrice(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
+
+}

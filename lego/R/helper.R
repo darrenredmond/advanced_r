@@ -132,6 +132,12 @@ filterByYearPricePieceTheme <- function(dataset,
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' groupByYear(dataset)
+#' groupByYear(dataset, themes=c('Star Wars'))
+#' groupByYear(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+#' groupByYear(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
 #'
 groupByYear <- function(dataset,
     minYear=min(dataset$year), maxYear=max(dataset$year),
@@ -161,6 +167,12 @@ groupByYear <- function(dataset,
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' groupByPiece(dataset)
+#' groupByPiece(dataset, themes=c('Star Wars'))
+#' groupByPiece(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+#' groupByPiece(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
 #'
 groupByPiece <- function(dataset,
     minYear=min(dataset$year), maxYear=max(dataset$year),
@@ -190,6 +202,12 @@ groupByPiece <- function(dataset,
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' groupByPrice(dataset)
+#' groupByPrice(dataset, themes=c('Star Wars'))
+#' groupByPrice(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+#' groupByPrice(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
 #'
 groupByPrice <- function(dataset,
     minYear=min(dataset$year), maxYear=max(dataset$year),
@@ -202,7 +220,7 @@ groupByPrice <- function(dataset,
     arrange(.data$year)
 }
 
-#' Group by themes
+#' Group by year to get the number of themes.
 #' @param dataset the dataset.
 #' @param minYear the minimum year.
 #' @param maxYear the maximum year.
@@ -215,33 +233,19 @@ groupByPrice <- function(dataset,
 #' @return the filtered dataset with the filters applied.
 #' @export
 #' @importFrom DT datatable
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' groupByTheme(dataset)
+#' groupByTheme(dataset, themes=c('Star Wars'))
+#' groupByTheme(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+#' groupByTheme(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
 #'
-groupByTheme <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
-  datatable(filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
-    options=list(iDisplayLength=50))
-}
-
-#' Group by year to get total count of themes.
-#' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
-#' @param minPrice the minimum price count.
-#' @param maxPrice the maximum price count.
-#' @param minPieces the minimum piece count.
-#' @param maxPieces the maximum piece count.
-#' @param themes the themes to include in the filtered dataset.
-#' @param subthemes the subthemes to include in the filtered dataset.
-#' @return data.table 2 columns
-#' @export
-#' @importFrom dplyr arrange
-#' @importFrom dplyr group_by
-#' @importFrom dplyr n_distinct
-#' @importFrom dplyr summarise
-#' @importFrom magrittr %>%
-#' @importFrom rlang .data
-#'
-groupByYearAgg <- function(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) {
-  filterByYear(dataset, minYear, maxYear) %>%
+groupByTheme <- function(dataset,
+    minYear=min(dataset$year), maxYear=max(dataset$year),
+    minPrice=min(dataset$price), maxPrice=max(dataset$price),
+    minPieces=min(dataset$pieces), maxPieces=max(dataset$pieces),
+    themes=sort(unique(dataset$theme)), subthemes=sort(unique(dataset$subtheme))) {
+  filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes) %>%
     group_by(.data$year) %>%
     summarise(count=n_distinct(.data$theme)) %>%
     arrange(.data$year)
@@ -559,6 +563,52 @@ ggplotSetsCountByYear <- function(dataset, title="Number of Sets per Year",
 #' @importFrom ggplot2 ylab
 ggplotPiecesCountByYear <- function(dataset, title="Number of Pieces per Year",
     xAxisLabel="Year", yAxisLabel="Number of Pieces",
+    caption="Source: Darren Redmond's owned dataset") {
+  ggplotCountByYear(dataset, title, xAxisLabel, yAxisLabel, caption)
+}
+
+#' Ggplot price by year
+#' @param dataset the dataset.
+#' @param title the title.
+#' @param xAxisLabel the x axis label - the year.
+#' @param yAxisLabel the y axis label - the price.
+#' @param caption the caption.
+#' @return the setsByPrice plot.
+#' @export
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 scale_x_continuous
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+ggplotPriceByYear <- function(dataset, title="Price per Year",
+    xAxisLabel="Year", yAxisLabel="Price",
+    caption="Source: Darren Redmond's owned dataset") {
+  ggplotCountByYear(dataset, title, xAxisLabel, yAxisLabel, caption)
+}
+
+#' Ggplot number of themes by year
+#' @param dataset the dataset.
+#' @param title the title.
+#' @param xAxisLabel the x axis label - the year.
+#' @param yAxisLabel the y axis label - the price.
+#' @param caption the caption.
+#' @return the themesByYear plot.
+#' @export
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 scale_x_continuous
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+ggplotThemesCountByYear <- function(dataset, title="Number of Themes per Year",
+    xAxisLabel="Year", yAxisLabel="Number of Themes",
     caption="Source: Darren Redmond's owned dataset") {
   ggplotCountByYear(dataset, title, xAxisLabel, yAxisLabel, caption)
 }

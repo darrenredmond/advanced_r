@@ -124,11 +124,13 @@ knitr::kable(head(groupByPrice(data), 15))
 
 ## Plots
 
-All of the helper functions above are useful for shaping the data to plot the data - so to see some interactive plots the following functions were created.
+All of the helper functions above are useful for shaping the data to plot the data - so to see some ggplots the following functions were created.
 
 ```{r, fig.show='hold'}
 ggplotSetsCountByYear(groupByYear(data))
 ggplotPiecesCountByYear(groupByPiece(data))
+ggplotPriceByYear(groupByPrice(data))
+ggplotThemesCountByYear(groupByTheme(data))
 ```
 
 ```{r, fig.show='hold', results='asis', comment=NA}

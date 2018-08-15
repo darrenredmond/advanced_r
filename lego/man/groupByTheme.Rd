@@ -2,10 +2,14 @@
 % Please edit documentation in R/helper.R
 \name{groupByTheme}
 \alias{groupByTheme}
-\title{Group by themes}
+\title{Group by year to get the number of themes.}
 \usage{
-groupByTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces,
-  maxPieces, themes, subthemes)
+groupByTheme(dataset, minYear = min(dataset$year),
+  maxYear = max(dataset$year), minPrice = min(dataset$price),
+  maxPrice = max(dataset$price), minPieces = min(dataset$pieces),
+  maxPieces = max(dataset$pieces),
+  themes = sort(unique(dataset$theme)),
+  subthemes = sort(unique(dataset$subtheme)))
 }
 \arguments{
 \item{dataset}{the dataset.}
@@ -30,5 +34,13 @@ groupByTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces,
 the filtered dataset with the filters applied.
 }
 \description{
-Group by themes
+Group by year to get the number of themes.
+}
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+groupByTheme(dataset)
+groupByTheme(dataset, themes=c('Star Wars'))
+groupByTheme(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+groupByTheme(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
+
 }

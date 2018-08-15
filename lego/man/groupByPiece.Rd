@@ -36,3 +36,11 @@ data.table 2 columns
 \description{
 Group by year to get total count of pieces.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+groupByPiece(dataset)
+groupByPiece(dataset, themes=c('Star Wars'))
+groupByPiece(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+groupByPiece(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
+
+}

@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+require(lego)
 ```
 
 Darren's lego package provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
@@ -36,11 +37,11 @@ These can be loaded with the code `system.file('extdata', 'brickset-mysets-owned
 
 I also a read.lego function which be used to convert the csv file into a dataset which the functions can use:
 
-`lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego')`
+`read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego')`
 `head(data, 10)`
 
 ```{r, echo=FALSE, results='asis'}
-data <- lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+data <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
 knitr::kable(head(data))
 ```
 
@@ -50,35 +51,92 @@ So it can be seen that we have loaded in a dataset with 7 columns, theme, name, 
 
 The first function created is the function to filter by year. This can be used to filter sets between a year range.
 
-`lego::filterByYear(data, 2004, 2011)`
+`filterByYear(data, 2004, 2011)`
 
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(head(lego::filterByYear(data, 2004, 2011)))
+knitr::kable(head(filterByYear(data, 2004, 2011)))
 ```
 
-The parameters are defaulted to the min and max in the dataset so you might call this function with just a min year set:
+The year parameters are defaulted to the min and max in the dataset so you might call this function with just a min year set:
 
-`lego::filterByYear(data, 2015)`
+`filterByYear(data, 2015)`
 
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(head(lego::filterByYear(data, 2015)))
+knitr::kable(head(filterByYear(data, 2015)))
 ```
 
 Or, with just a max year set:
 
-`lego::filterByYear(data, maxYear=2011)`
+`filterByYear(data, maxYear=2011)`
 
 ```{r, echo=FALSE, results='asis'}
-knitr::kable(head(lego::filterByYear(data, maxYear=2011)))
+knitr::kable(head(filterByYear(data, maxYear=2011)))
 ```
 
-## Figures
+Then one might want to filter by more fields than just year - the price, the number of pieces, the themes, and the subthemes.
+The `filterByYearPricePieceTheme(data, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes)` is the function for you.
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+`filterByYearPricePieceTheme(data, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(filterByYearPricePieceTheme(data, 2010, 2016, 5, 100, 100, 1000, c('Star Wars'), c('Episode I'))))
+```
+
+As you can see all Star Wars - Episode I sets between 2010 and 2016 inclusive, costing between 5 and 100 euros (also dollars - due to lego pricing policy), containing between 100 and 1000 pieces have been returned.
+
+Or if you just wanted all of the Star Wars lego sets then the following can be called:
+
+`filterByYearPricePieceTheme(data, themes=c('Star Wars'))`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(filterByYearPricePieceTheme(data, themes=c('Star Wars'))))
+```
+
+This function is used extensively in the shiny application developed in this package.
+
+## Grouping Data
+
+Next I started to think of summary statistics and grouping the data by various fields so some helper groupBy functions were created.
+
+To see the number of sets in each year in the dataset the following can be run:
+
+`groupByYear(data)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(groupByYear(data), 15))
+```
+
+To see the number of pieces in each year in the dataset the following can be run:
+
+`groupByPiece(data)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(groupByPiece(data), 15))
+```
+
+To see the price for each year in the dataset the following can be run:
+
+`groupByPrice(data)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(groupByPrice(data), 15))
+```
+
+## Plots
+
+All of the helper functions above are useful for shaping the data to plot the data - so to see some interactive plots the following functions were created.
 
 ```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+ggplotSetsCountByYear(groupByYear(data))
+ggplotPiecesCountByYear(groupByPiece(data))
+```
+
+```{r, fig.show='hold', results='asis', comment=NA}
+require(rCharts)
+require(knitr)
+#plotSetsCountByYear(groupByYear(data))
+#plotPiecesCountByYear(groupByPiece(data))$show("iframesrc", cdn=TRUE)
+#knitr::include_app(runShinyLego())
 ```
 
 You can enable figure captions by `fig_caption: yes` in YAML:

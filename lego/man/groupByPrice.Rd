@@ -4,8 +4,12 @@
 \alias{groupByPrice}
 \title{Group by year to get total price.}
 \usage{
-groupByPrice(dataset, minYear, maxYear, minPrice, maxPrice, minPieces,
-  maxPieces, themes, subthemes)
+groupByPrice(dataset, minYear = min(dataset$year),
+  maxYear = max(dataset$year), minPrice = min(dataset$price),
+  maxPrice = max(dataset$price), minPieces = min(dataset$pieces),
+  maxPieces = max(dataset$pieces),
+  themes = sort(unique(dataset$theme)),
+  subthemes = sort(unique(dataset$subtheme)))
 }
 \arguments{
 \item{dataset}{the dataset.}

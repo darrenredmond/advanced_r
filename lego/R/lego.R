@@ -23,6 +23,7 @@ createProject <- function(dir, name) {
   devtools::use_package('rmarkdown')
   devtools::use_package('knitr')
   devtools::use_package('shiny')
+  devtools::use_package('ggplot2')
   devtools::use_mit_license()
   devtools::use_vignette(name)
   devtools::install(build_vignettes = TRUE)

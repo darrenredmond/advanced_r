@@ -1,6 +1,6 @@
 Package: lego 
 Title: Darren's Lego - Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file
-Version: 1.0.0.0
+Version: 1.0.0
 Authors@R: person("Darren", "Redmond", email = "darren.redmond@gmail.com", role = c("aut", "cre"))
 Description: Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
 Depends: R (>= 3.5.0)

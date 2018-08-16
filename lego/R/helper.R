@@ -161,6 +161,7 @@ groupByYear <- function(dataset,
 #' @param themes the themes to include in the filtered dataset.
 #' @param subthemes the subthemes to include in the filtered dataset.
 #' @return data.table 2 columns
+#' @keywords lego
 #' @export
 #' @importFrom dplyr arrange
 #' @importFrom dplyr group_by
@@ -196,6 +197,7 @@ groupByPiece <- function(dataset,
 #' @param themes the themes to include in the filtered dataset.
 #' @param subthemes the subthemes to include in the filtered dataset.
 #' @return data.table 2 columns
+#' @keywords lego
 #' @export
 #' @importFrom dplyr arrange
 #' @importFrom dplyr group_by
@@ -231,6 +233,7 @@ groupByPrice <- function(dataset,
 #' @param themes the themes to include in the filtered dataset.
 #' @param subthemes the subthemes to include in the filtered dataset.
 #' @return the filtered dataset with the filters applied.
+#' @keywords lego
 #' @export
 #' @importFrom DT datatable
 #' @examples
@@ -262,6 +265,7 @@ groupByTheme <- function(dataset,
 #' @param themes the themes to include in the filtered dataset.
 #' @param subthemes the subthemes to include in the filtered dataset.
 #' @return data.table 2 columns
+#' @keywords lego
 #' @export
 #' @importFrom dplyr arrange
 #' @importFrom dplyr group_by
@@ -291,6 +295,7 @@ groupByPieceAvg <- function(dataset,
 #' @param themes the themes to include in the filtered dataset.
 #' @param subthemes the subthemes to include in the filtered dataset.
 #' @return data.table 2 columns
+#' @keywords lego
 #' @export
 #' @importFrom dplyr arrange
 #' @importFrom dplyr group_by
@@ -315,6 +320,7 @@ groupByPieceThemeAvg <- function(dataset,
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the number of sets.
 #' @return the setsByYear plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotSetsCountByYear <- function(dataset, dom="setsByYear",
@@ -338,6 +344,7 @@ plotSetsCountByYear <- function(dataset, dom="setsByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the number of pieces.
 #' @return the piecesCountByYear plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotPiecesCountByYear <- function(dataset, dom="piecesCountByYear",
@@ -359,6 +366,7 @@ plotPiecesCountByYear <- function(dataset, dom="piecesCountByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the price.
 #' @return the priceCountByYear plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotPriceCountByYear <- function(dataset, dom="priceCountByYear",
@@ -380,6 +388,7 @@ plotPriceCountByYear <- function(dataset, dom="priceCountByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - number of themes.
 #' @return the themesByYear plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotThemesCountByYear <- function(dataset, dom="themesByYear",
@@ -402,6 +411,7 @@ plotThemesCountByYear <- function(dataset, dom="themesByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - number of pieces.
 #' @return the piecesByYear plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotPiecesByYear <- function(dataset, dom="piecesByYear",
@@ -426,6 +436,7 @@ plotPiecesByYear <- function(dataset, dom="piecesByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - the price.
 #' @return the priceByYear plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotPriceByYear <- function(dataset, dom="priceByYear",
@@ -449,6 +460,7 @@ plotPriceByYear <- function(dataset, dom="priceByYear",
 #' @param xAxisLabel the x axis label - the year.
 #' @param yAxisLabel the y axis label - number of pieces.
 #' @return the themesByYear plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotPiecesByYearAvg <- function(dataset, dom="piecesByYearAvg",
@@ -467,6 +479,7 @@ plotPiecesByYearAvg <- function(dataset, dom="piecesByYearAvg",
 #' @param xAxisLabel the x axis label - the themes.
 #' @param yAxisLabel the y axis label - number of pieces.
 #' @return the piecesByThemeAvg plot.
+#' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
 plotPiecesByThemeAvg <- function(dataset, dom="piecesByThemeAvg",
@@ -480,16 +493,12 @@ plotPiecesByThemeAvg <- function(dataset, dom="piecesByThemeAvg",
   piecesByThemeAvg
 }
 
-plotLego <- function(dataset) {
-  plotPiecesByYearAvg(groupByPieceAvg(dataset))
-  #plotPiecesByThemeAvg(groupByPieceThemeAvg(dataset))
-}
-
 #' Run the shiny application.
+#' @keywords lego
 #' @export
 #' @importFrom shiny runApp
 runShinyLego <- function() {
-  shiny::runApp('R')
+  shiny::runApp(system.file('shiny', package='lego'))
 }
 
 #' Ggplot count by group
@@ -501,6 +510,7 @@ runShinyLego <- function() {
 #' @param x - defaults to the year.
 #' @param y - defaults to the count.
 #' @return the count by year plot.
+#' @keywords lego
 #' @export
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 element_text
@@ -533,6 +543,7 @@ ggplotCountByGroup <- function(dataset, title="Number per Year",
 #' @param x - defaults to the year.
 #' @param y - defaults to the count.
 #' @return the count by year plot.
+#' @keywords lego
 #' @export
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 element_text
@@ -563,6 +574,7 @@ ggplotCountByGroupDiscrete <- function(dataset, title="Number per Year",
 #' @param yAxisLabel the y axis label - the number of sets.
 #' @param caption the caption.
 #' @return the setsByYear plot.
+#' @keywords lego
 #' @export
 #' @examples
 #' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
@@ -585,6 +597,7 @@ ggplotSetsCountByYear <- function(dataset, title="Number of Sets per Year",
 #' @param yAxisLabel the y axis label - the number of pieces.
 #' @param caption the caption.
 #' @return the setsByPiecesCount plot.
+#' @keywords lego
 #' @export
 #' @examples
 #' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
@@ -607,6 +620,7 @@ ggplotPiecesCountByYear <- function(dataset, title="Number of Pieces per Year",
 #' @param yAxisLabel the y axis label - the price.
 #' @param caption the caption.
 #' @return the setsByPrice plot.
+#' @keywords lego
 #' @export
 #' @examples
 #' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
@@ -629,6 +643,7 @@ ggplotPriceByYear <- function(dataset, title="Price per Year",
 #' @param yAxisLabel the y axis label - the price.
 #' @param caption the caption.
 #' @return the themesByYear plot.
+#' @keywords lego
 #' @export
 #' @examples
 #' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
@@ -651,6 +666,7 @@ ggplotThemesCountByYear <- function(dataset, title="Number of Themes per Year",
 #' @param yAxisLabel the y axis label - the average number of pieces.
 #' @param caption the caption.
 #' @return the piecesByTheme plot.
+#' @keywords lego
 #' @export
 #' @examples
 #' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))

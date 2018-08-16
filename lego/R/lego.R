@@ -25,10 +25,14 @@ createProject <- function(dir, name) {
   devtools::use_package('shiny')
   devtools::use_package('ggplot2')
   devtools::use_mit_license()
+  devtools::use_cran_comments()
   devtools::use_vignette(name)
   devtools::install(build_vignettes = TRUE)
   devtools::install(name)
+  devtools::release()
+  devtools::build_win()
 }
+
 explore <- function(data) {
   # Exploratory data analysis
   sum(is.na(data$pieces)) # 0

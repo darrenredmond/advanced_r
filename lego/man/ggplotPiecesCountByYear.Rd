@@ -25,3 +25,12 @@ the setsByPiecesCount plot.
 \description{
 Ggplot number of pieces by year
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+ggplotPiecesCountByYear(groupByPiece(dataset))
+ggplotPiecesCountByYear(groupByPiece(dataset, themes=c('Star Wars')))
+ggplotPiecesCountByYear(groupByPiece(dataset, 2010, 2016, 5, 10, 100, 1000,
+    c('Star Wars'), c('Episode I')))
+ggplotPiecesCountByYear(groupByPiece(dataset, 2014, 2015,
+    themes=c('Star Wars'), subthemes=c('Episode I')))
+}

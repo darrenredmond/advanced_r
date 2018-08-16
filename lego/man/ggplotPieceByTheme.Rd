@@ -4,7 +4,7 @@
 \alias{ggplotPieceByTheme}
 \title{Ggplot average number of pieces by themes}
 \usage{
-ggplotPieceByTheme(dataset, title = "Avg Num of Pieces per Theme",
+ggplotPieceByTheme(dataset, title = "Avg Num of Pieces by Theme",
   xAxisLabel = "Theme", yAxisLabel = "Avg Num of Pieces",
   caption = "Source: Darren Redmond's owned dataset")
 }
@@ -24,4 +24,13 @@ the piecesByTheme plot.
 }
 \description{
 Ggplot average number of pieces by themes
+}
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+ggplotPieceByTheme(groupByPieceThemeAvg(dataset))
+ggplotPieceByTheme(groupByPieceThemeAvg(dataset, themes=c('Star Wars')))
+ggplotPieceByTheme(groupByPieceThemeAvg(dataset, 2010, 2016, 5, 10, 100, 1000,
+    c('Star Wars'), c('Episode I')))
+ggplotPieceByTheme(groupByPieceThemeAvg(dataset, 2014, 2015,
+    themes=c('Star Wars'), subthemes=c('Episode I')))
 }

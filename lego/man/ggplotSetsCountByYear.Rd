@@ -25,3 +25,12 @@ the setsByYear plot.
 \description{
 Ggplot number of sets by year
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+ggplotSetsCountByYear(groupByYear(dataset))
+ggplotSetsCountByYear(groupByYear(dataset, themes=c('Star Wars')))
+ggplotSetsCountByYear(groupByYear(dataset, 2010, 2016, 5, 10, 100, 1000,
+    c('Star Wars'), c('Episode I')))
+ggplotSetsCountByYear(groupByYear(dataset, 2014, 2015,
+    themes=c('Star Wars'), subthemes=c('Episode I')))
+}

@@ -25,3 +25,12 @@ the setsByPrice plot.
 \description{
 Ggplot price by year
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+ggplotPriceByYear(groupByPrice(dataset))
+ggplotPriceByYear(groupByPrice(dataset, themes=c('Star Wars')))
+ggplotPriceByYear(groupByPrice(dataset, 2010, 2016, 5, 10, 100, 1000,
+    c('Star Wars'), c('Episode I')))
+ggplotPriceByYear(groupByPrice(dataset, 2014, 2015,
+    themes=c('Star Wars'), subthemes=c('Episode I')))
+}

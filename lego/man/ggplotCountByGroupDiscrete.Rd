@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper.R
 \name{ggplotCountByGroupDiscrete}
 \alias{ggplotCountByGroupDiscrete}
-\title{Ggplot count by group}
+\title{Ggplot count by group with a discrete set of values on the x axis.}
 \usage{
 ggplotCountByGroupDiscrete(dataset, title = "Number per Year",
   xAxisLabel = "Year", yAxisLabel = "Number",
@@ -28,5 +28,5 @@ ggplotCountByGroupDiscrete(dataset, title = "Number per Year",
 the count by year plot.
 }
 \description{
-Ggplot count by group
+Ggplot count by group with a discrete set of values on the x axis.
 }

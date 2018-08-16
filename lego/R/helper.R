@@ -564,6 +564,14 @@ ggplotCountByGroupDiscrete <- function(dataset, title="Number per Year",
 #' @param caption the caption.
 #' @return the setsByYear plot.
 #' @export
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' ggplotSetsCountByYear(groupByYear(dataset))
+#' ggplotSetsCountByYear(groupByYear(dataset, themes=c('Star Wars')))
+#' ggplotSetsCountByYear(groupByYear(dataset, 2010, 2016, 5, 10, 100, 1000,
+#'     c('Star Wars'), c('Episode I')))
+#' ggplotSetsCountByYear(groupByYear(dataset, 2014, 2015,
+#'     themes=c('Star Wars'), subthemes=c('Episode I')))
 ggplotSetsCountByYear <- function(dataset, title="Number of Sets per Year",
     xAxisLabel="Year", yAxisLabel="Number of Sets",
     caption="Source: Darren Redmond's owned dataset") {
@@ -578,6 +586,14 @@ ggplotSetsCountByYear <- function(dataset, title="Number of Sets per Year",
 #' @param caption the caption.
 #' @return the setsByPiecesCount plot.
 #' @export
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' ggplotPiecesCountByYear(groupByPiece(dataset))
+#' ggplotPiecesCountByYear(groupByPiece(dataset, themes=c('Star Wars')))
+#' ggplotPiecesCountByYear(groupByPiece(dataset, 2010, 2016, 5, 10, 100, 1000,
+#'     c('Star Wars'), c('Episode I')))
+#' ggplotPiecesCountByYear(groupByPiece(dataset, 2014, 2015,
+#'     themes=c('Star Wars'), subthemes=c('Episode I')))
 ggplotPiecesCountByYear <- function(dataset, title="Number of Pieces per Year",
     xAxisLabel="Year", yAxisLabel="Number of Pieces",
     caption="Source: Darren Redmond's owned dataset") {
@@ -592,6 +608,14 @@ ggplotPiecesCountByYear <- function(dataset, title="Number of Pieces per Year",
 #' @param caption the caption.
 #' @return the setsByPrice plot.
 #' @export
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' ggplotPriceByYear(groupByPrice(dataset))
+#' ggplotPriceByYear(groupByPrice(dataset, themes=c('Star Wars')))
+#' ggplotPriceByYear(groupByPrice(dataset, 2010, 2016, 5, 10, 100, 1000,
+#'     c('Star Wars'), c('Episode I')))
+#' ggplotPriceByYear(groupByPrice(dataset, 2014, 2015,
+#'     themes=c('Star Wars'), subthemes=c('Episode I')))
 ggplotPriceByYear <- function(dataset, title="Price per Year",
     xAxisLabel="Year", yAxisLabel="Price",
     caption="Source: Darren Redmond's owned dataset") {
@@ -606,6 +630,14 @@ ggplotPriceByYear <- function(dataset, title="Price per Year",
 #' @param caption the caption.
 #' @return the themesByYear plot.
 #' @export
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' ggplotThemesCountByYear(groupByTheme(dataset))
+#' ggplotThemesCountByYear(groupByTheme(dataset, themes=c('Star Wars')))
+#' ggplotThemesCountByYear(groupByTheme(dataset, 2010, 2016, 5, 10, 100, 1000,
+#'     c('Star Wars'), c('Episode I')))
+#' ggplotThemesCountByYear(groupByTheme(dataset, 2014, 2015,
+#'     themes=c('Star Wars'), subthemes=c('Episode I')))
 ggplotThemesCountByYear <- function(dataset, title="Number of Themes per Year",
     xAxisLabel="Year", yAxisLabel="Number of Themes",
     caption="Source: Darren Redmond's owned dataset") {
@@ -620,7 +652,15 @@ ggplotThemesCountByYear <- function(dataset, title="Number of Themes per Year",
 #' @param caption the caption.
 #' @return the piecesByTheme plot.
 #' @export
-ggplotPieceByTheme <- function(dataset, title="Avg Num of Pieces per Theme",
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' ggplotPieceByTheme(groupByPieceThemeAvg(dataset))
+#' ggplotPieceByTheme(groupByPieceThemeAvg(dataset, themes=c('Star Wars')))
+#' ggplotPieceByTheme(groupByPieceThemeAvg(dataset, 2010, 2016, 5, 100, 100, 1000,
+#'     c('Star Wars'), c('Episode I')))
+#' ggplotPieceByTheme(groupByPieceThemeAvg(dataset, 2014, 2015,
+#'     themes=c('Star Wars'), subthemes=c('Episode I')))
+ggplotPieceByTheme <- function(dataset, title="Avg Num of Pieces by Theme",
     xAxisLabel="Theme", yAxisLabel="Avg Num of Pieces",
     caption="Source: Darren Redmond's owned dataset") {
   ggplotCountByGroupDiscrete(dataset, title, xAxisLabel, yAxisLabel, caption, x=dataset$theme, y=dataset$avgPieces)

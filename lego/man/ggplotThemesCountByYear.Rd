@@ -25,3 +25,12 @@ the themesByYear plot.
 \description{
 Ggplot number of themes by year
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+ggplotThemesCountByYear(groupByTheme(dataset))
+ggplotThemesCountByYear(groupByTheme(dataset, themes=c('Star Wars')))
+ggplotThemesCountByYear(groupByTheme(dataset, 2010, 2016, 5, 10, 100, 1000,
+    c('Star Wars'), c('Episode I')))
+ggplotThemesCountByYear(groupByTheme(dataset, 2014, 2015,
+    themes=c('Star Wars'), subthemes=c('Episode I')))
+}

@@ -19,7 +19,7 @@ require(lego)
 
 Darren's lego package provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
 
-So you have created a brickset account and added all of the lego sets that you own to your Brickset account. What next?
+So you have created a brickset account and have added all of the lego sets that you own to your Brickset account. What next?
 
 Well if you download your csv file for either your Owned or Wanted you can use this package to generate summary statistics, interactive plots, provide regression analysis, top 5 sets by value, and even comes with a shiny interactive application that you can analyse your lego collection in an interactive intuitive manner.
 
@@ -122,34 +122,60 @@ To see the price for each year in the dataset the following can be run:
 knitr::kable(head(groupByPrice(data), 15))
 ```
 
+To see the number of themes for each year in the dataset the following can be run:
+
+`groupByTheme(data)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(groupByTheme(data), 15))
+```
+
+To see the average number of pieces for each themes in the dataset the following can be run:
+
+`groupByPieceThemeAvg(data)`
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(groupByPieceThemeAvg(data), 15))
+```
+
 ## Plots
 
 All of the helper functions above are useful for shaping the data to plot the data - so to see some ggplots the following functions were created.
 
-```{r, fig.show='hold'}
+```{r, fig.show='hold', echo=TRUE}
 ggplotSetsCountByYear(groupByYear(data))
+```
+
+```{r, fig.show='hold', echo=TRUE}
 ggplotPiecesCountByYear(groupByPiece(data))
+```
+
+```{r, fig.show='hold', echo=TRUE}
 ggplotPriceByYear(groupByPrice(data))
+```
+
+```{r, fig.show='hold', echo=TRUE}
 ggplotThemesCountByYear(groupByTheme(data))
+```
+
+```{r, fig.show='hold', echo=TRUE}
 ggplotPieceByTheme(groupByPieceThemeAvg(data))
 ```
 
 ```{r, fig.show='hold', results='asis', comment=NA}
-require(rCharts)
-require(knitr)
+#require(rCharts)
+#require(knitr)
 #plotSetsCountByYear(groupByYear(data))
 #plotPiecesCountByYear(groupByPiece(data))$show("iframesrc", cdn=TRUE)
 #knitr::include_app(runShinyLego())
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
 ## More Examples
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+You can check out the examples for each of the functions here.
+
+`example(filterByYear)`
+
+## Help
+
+`help(filterByYear)`

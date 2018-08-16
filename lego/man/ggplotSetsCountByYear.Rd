@@ -34,3 +34,4 @@ ggplotSetsCountByYear(groupByYear(dataset, 2010, 2016, 5, 10, 100, 1000,
 ggplotSetsCountByYear(groupByYear(dataset, 2014, 2015,
     themes=c('Star Wars'), subthemes=c('Episode I')))
 }
+\keyword{lego}

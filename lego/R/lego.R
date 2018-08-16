@@ -6,6 +6,8 @@ if (!require('devtools')) install.packages('devtools')
 library(devtools)
 if (!require('rmarkdown')) install.packages('rmarkdown')
 library(rmarkdown)
+if (!require('rsconnect')) install.packages('rsconnect')
+library(rsconnect)
 
 createProject <- function(dir, name) {
   setwd(dir)
@@ -17,6 +19,7 @@ createProject <- function(dir, name) {
   devtools::use_package('magrittr')
   devtools::use_package('data.table')
   devtools::use_package('DT')
+  devtools::use_package('rsconnect')
   devtools::use_package('rlang')
   devtools::use_package('devtools')
   devtools::use_package('rCharts')
@@ -66,6 +69,13 @@ examples <- function() {
   print(filterByYearPricePieceTheme(data, 1950, 2018, 0, 10000, 0, 10000, themes, subthemes))
   print(filterByYearPricePieceTheme(data, 1950, 2018, 0, 10000, 0, 10000, c('Star Wars'), subthemes))
   print(filterByYearPricePieceTheme(data, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I')))
+}
+
+deployToShiny <- function() {
+  rsconnect::setAccountInfo(name='darrenredmond',
+    token='0D87A741E5BB9F1F7E3A1C81CAEACAE3',
+    secret='YTgtmSMTk/mNyRDN3dOUzGuWv22q9lV8GwDzB47o')
+  rsconnect::deployApp('inst/shiny')
 }
 
 # Load required libraries

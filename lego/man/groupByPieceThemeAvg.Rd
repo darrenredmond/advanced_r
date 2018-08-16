@@ -36,3 +36,4 @@ data.table 2 columns
 \description{
 Average pieces for each theme.
 }
+\keyword{lego}

@@ -162,20 +162,24 @@ ggplotThemesCountByYear(groupByTheme(data))
 ggplotPieceByTheme(groupByPieceThemeAvg(data))
 ```
 
-```{r, fig.show='hold', results='asis', comment=NA}
-#require(rCharts)
-#require(knitr)
-#plotSetsCountByYear(groupByYear(data))
-#plotPiecesCountByYear(groupByPiece(data))$show("iframesrc", cdn=TRUE)
-#knitr::include_app(runShinyLego())
+## Shiny Lego
+
+To run the shiny lego application you may run the following code: `runShinyLego()`
+
+Note: The shiny app here will only display in the browser and not in the R-Studio Preview of the Vignette.
+
+```{r}
+knitr::include_url("https://darrenredmond.shinyapps.io/shiny/")
 ```
+
+## Help
+
+[Vignette Home](index.html)
+
+[Help Home](../html/00Index.html)
 
 ## More Examples
 
 You can check out the examples for each of the functions here.
 
 `example(filterByYear)`
-
-## Help
-
-`help(filterByYear)`

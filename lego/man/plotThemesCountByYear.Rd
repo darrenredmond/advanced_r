@@ -22,3 +22,4 @@ the themesByYear plot.
 \description{
 Plot number of themes by year.
 }
+\keyword{lego}

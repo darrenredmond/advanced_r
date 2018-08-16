@@ -22,3 +22,4 @@ the priceByYear plot.
 \description{
 Plot price by year.
 }
+\keyword{lego}

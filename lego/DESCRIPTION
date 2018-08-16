@@ -19,5 +19,6 @@ Imports:
     shiny,
     rmarkdown,
     knitr,
-    ggplot2
+    ggplot2,
+    rsconnect
 VignetteBuilder: knitr

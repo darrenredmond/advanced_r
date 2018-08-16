@@ -36,3 +36,4 @@ data.table 2 columns
 \description{
 Aggregate dataset by year to get total count of average number of pieces.
 }
+\keyword{lego}

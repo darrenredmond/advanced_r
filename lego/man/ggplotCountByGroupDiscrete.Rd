@@ -30,3 +30,4 @@ the count by year plot.
 \description{
 Ggplot count by group with a discrete set of values on the x axis.
 }
+\keyword{lego}

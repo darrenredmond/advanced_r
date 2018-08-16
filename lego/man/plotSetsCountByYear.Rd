@@ -22,3 +22,4 @@ the setsByYear plot.
 \description{
 Plot number of sets by year
 }
+\keyword{lego}

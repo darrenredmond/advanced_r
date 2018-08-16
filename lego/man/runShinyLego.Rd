@@ -9,3 +9,4 @@ runShinyLego()
 \description{
 Run the shiny application.
 }
+\keyword{lego}

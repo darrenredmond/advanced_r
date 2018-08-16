@@ -22,3 +22,4 @@ the piecesByThemeAvg plot.
 \description{
 Plot number of average pieces by theme
 }
+\keyword{lego}

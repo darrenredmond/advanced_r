@@ -22,3 +22,4 @@ the piecesByYear plot.
 \description{
 Plot number of pieces by year.
 }
+\keyword{lego}

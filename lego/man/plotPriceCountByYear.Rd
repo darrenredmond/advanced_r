@@ -22,4 +22,8 @@ the priceCountByYear plot.
 \description{
 Plot price by year.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+plotPriceCountByYear(groupByPrice(dataset))
+}
 \keyword{lego}

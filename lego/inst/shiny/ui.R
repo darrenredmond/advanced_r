@@ -21,6 +21,11 @@ library(DT)
 if (!require('lego')) install.packages('lego')
 library(lego)
 
+if (!exists("lego_data")) {
+  print('Loading Default Data File')
+  lego_data <- lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+}
+
 # create the shiny ui.
 shinyUI(
   # create the navigation bar page.

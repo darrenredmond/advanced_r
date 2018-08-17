@@ -96,6 +96,8 @@ knitr::kable(head(filterByYearPricePieceTheme(data, themes=c('Star Wars'))))
 
 This function is used extensively in the shiny application developed in this package.
 
+This function is also wrapped by a simpler function name called `filterBy`.
+
 ## Grouping Data
 
 Next I started to think of summary statistics and grouping the data by various fields so some helper groupBy functions were created.
@@ -197,9 +199,13 @@ ggplotThemesCountByYear(groupByTheme(sets_data, maxYear=2015))
 There is also a wrapper function called `ggplotLego` to simplify the calling of the ggplot which will have the axis, titles, and captions preset.
 
 `ggplotLego(dataset, 'year')`
+
 `ggplotLego(dataset, 'piece')`
+
 `ggplotLego(dataset, 'price')`
+
 `ggplotLego(dataset, 'theme')`
+
 `ggplotLego(dataset, 'piece_theme_avg')`
 
 ### Interactive Charts with RCharts
@@ -231,6 +237,24 @@ Interactive charts have also been created using the RCharts library and the foll
 
 The interactive versions of these above charts are the ones that are used in the shiny application.
 
+There is also a wrapper function called `plotLego` to simplify the calling of the interactive R charts which will have the axis, titles, and captions preset.
+
+`plotLego(dataset, 'year')` - Plot the number of sets by year.
+
+`plotLego(dataset, 'piece')` - Plot the number of pieces by year.
+
+`plotLego(dataset, 'price')` - Plot the price by year.
+
+`plotLego(dataset, 'theme')` - Plot the number of themes by year.
+
+`plotLego(dataset, 'piece_ind')` - Plot the number of pieces for each individual set by year.
+
+`plotLego(dataset, 'price_ind')` - Plot the price for each individual set by year.
+
+`plotLego(dataset, 'piece_avg')` - Plot the average number of pieces by year.
+
+`plotLego(dataset, 'piece_theme_avg')` - Plot the average number of pieces by theme.
+
 ## Shiny Lego
 
 To run the shiny lego application you may run the following code: `runShinyLego()`
@@ -246,6 +270,7 @@ To run the shiny lego app with your dataset you should load in your csv file wit
 The headings of the csv file should be `Number,Year,Pieces,Theme,SetName,USPrice,Subtheme`
 
 `lego_data <- read.lego('<ENTER_YOUR_CSV_DATA_FILE>')`
+
 `runShinyLego()`
 
 ## Help
@@ -258,38 +283,24 @@ The headings of the csv file should be `Number,Year,Pieces,Theme,SetName,USPrice
 
 You can check out the examples for each of the functions here.
 
-### Filter
+```{r table2, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+tabl <- "
+| Filter                                 | Group By                        | GGPlot                             | Interactive Plot                 |
+|----------------------------------------|---------------------------------|------------------------------------|----------------------------------|
+| `example(filterBy)`                    | `example(groupBy)`              | `example(ggplotLego)`              | `example(plotLego)`              |
+| `example(filterByYear)`                | `example(groupByYear)`          | `example(ggplotSetsCountByYear)`   | `example(plotPiecesByThemeAvg)`  |
+| `example(filterByYearPricePieceTheme)` | `example(groupByPiece)`         | `example(ggplotPiecesCountByYear)` | `example(plotPiecesByYear)`      |
+| `example(read.lego)`                   | `example(groupByPieceAvg)`      | `example(ggplotPriceByYear)`       | `example(plotPiecesByYearAvg)`   |
+| `example(runShinyLego)`                | `example(groupByPieceThemeAvg)` | `example(ggplotThemesCountByYear)` | `example(plotPiecesCountByYear)` |
+|                                        | `example(groupByPrice)`         | `example(ggplotPieceByTheme)`      | `example(plotPriceByYear)`       |
+|                                        | `example(groupByTheme)`         |                                    | `example(plotPriceCountByYear)`  |
+|                                        |                                 |                                    | `example(plotSetsCountByYear)`   |
+|                                        |                                 |                                    | `example(plotThemesCountByYear)` |
+"
+cat(tabl)
+```
 
-`example(filterByYear)`
+## References
 
-`example(filterByYearPricePieceTheme)`
-
-### Group By
-
-`example(groupBy)`
-
-`example(groupByYear)`
-
-`example(groupByPiece)`
-
-`example(groupByPieceAvg)`
-
-`example(groupByPieceThemeAvg)`
-
-`example(groupByPrice)`
-
-`example(groupByTheme)`
-
-### GGPlot
-
-`example(ggplotLego)`
-
-`example(ggplotSetsCountByYear)`
-
-`example(ggplotPiecesCountByYear)`
-
-`example(ggplotPriceByYear)`
-
-`example(ggplotThemesCountByYear)`
-
-`example(ggplotPieceByTheme)`
+* Shiny Sample Application - [https://shiny.rstudio.com/gallery/lego-set.html](https://shiny.rstudio.com/gallery/lego-set.html)
+* Brickset.com - [https://www.brickset.com](https://www.brickset.com)

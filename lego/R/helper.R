@@ -83,7 +83,7 @@ filterByYear <- function(dataset, minYear=min(dataset$year), maxYear=max(dataset
   dataset %>% filter(.data$year >= minYear, .data$year <= maxYear)
 }
 
-#' Filter dataset by year, price, number of pieces and theme
+#' Filter dataset by year, price, number of pieces, theme, and subtheme.
 #' @param dataset the dataset - expects a dataset.
 #' @param minYear the minimum year. Defaults to be minimum year in the dataset.
 #' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
@@ -115,6 +115,37 @@ filterByYearPricePieceTheme <- function(dataset,
       .data$price >= minPrice, .data$price <= maxPrice,
       .data$pieces >= minPieces, .data$pieces <= maxPieces,
       .data$theme %in% themes, .data$subtheme %in% subthemes)
+}
+
+#' Filter by wrapper function to filter a bricket dataset by year, price, number of pieces, theme, and subtheme.
+#' @param dataset the dataset - expects a dataset.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
+#' @return the filtered dataset with the filter parameters applied.
+#' @keywords lego
+#' @export
+#' @importFrom dplyr filter
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' filterBy(dataset)
+#' filterBy(dataset, themes=c('Star Wars'))
+#' filterBy(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+#' filterBy(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
+#'
+filterBy <- function(dataset,
+    minYear=min(dataset$year), maxYear=max(dataset$year),
+    minPrice=min(dataset$price), maxPrice=max(dataset$price),
+    minPieces=min(dataset$pieces), maxPieces=max(dataset$pieces),
+    themes=sort(unique(dataset$theme)), subthemes=sort(unique(dataset$subtheme))) {
+  filterByYearPricePieceTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes)
 }
 
 #' Group by year and summarise by set.
@@ -330,7 +361,7 @@ groupByPieceThemeAvg <- function(dataset,
     arrange(.data$theme)
 }
 
-#' Group By wrapper function to call each of the subfunctions simply.
+#' Group by wrapper function to call each of the subfunctions simply.
 #' @param dataset the dataset.
 #' @param type the type to group by - can be one of 'year', 'piece', 'price', 'theme', 'piece_avg', 'piece_theme_avg'.
 #' @param minYear the minimum year. Defaults to be minimum year in the dataset.
@@ -381,6 +412,9 @@ groupBy <- function(dataset, type,
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotSetsCountByYear(groupByYear(dataset))
 plotSetsCountByYear <- function(dataset, dom="setsByYear",
     xAxisLabel="Year", yAxisLabel="Number of Sets") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -405,6 +439,9 @@ plotSetsCountByYear <- function(dataset, dom="setsByYear",
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotPiecesCountByYear(groupByPiece(dataset))
 plotPiecesCountByYear <- function(dataset, dom="piecesCountByYear",
     xAxisLabel="Year", yAxisLabel="Number of Pieces") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -427,6 +464,9 @@ plotPiecesCountByYear <- function(dataset, dom="piecesCountByYear",
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotPriceCountByYear(groupByPrice(dataset))
 plotPriceCountByYear <- function(dataset, dom="priceCountByYear",
     xAxisLabel="Year", yAxisLabel="Price") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -449,6 +489,9 @@ plotPriceCountByYear <- function(dataset, dom="priceCountByYear",
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotThemesCountByYear(groupByTheme(dataset))
 plotThemesCountByYear <- function(dataset, dom="themesByYear",
     xAxisLabel="Year", yAxisLabel="Number of Themes") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -463,7 +506,7 @@ plotThemesCountByYear <- function(dataset, dom="themesByYear",
   themesByYear
 }
 
-#' Plot number of pieces by year.
+#' Plot number of pieces by year for each individual set.
 #' @param dataset the dataset.
 #' @param dom the dom.
 #' @param xAxisLabel the x axis label - the year.
@@ -472,6 +515,9 @@ plotThemesCountByYear <- function(dataset, dom="themesByYear",
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotPiecesByYear(filterByYearPricePieceTheme(dataset))
 plotPiecesByYear <- function(dataset, dom="piecesByYear",
     xAxisLabel="Year", yAxisLabel="Number of Pieces") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -488,7 +534,7 @@ plotPiecesByYear <- function(dataset, dom="piecesByYear",
   piecesByYear
 }
 
-#' Plot price by year.
+#' Plot price by year for each individual set.
 #' @param dataset the dataset.
 #' @param dom the dom.
 #' @param xAxisLabel the x axis label - the year.
@@ -497,6 +543,9 @@ plotPiecesByYear <- function(dataset, dom="piecesByYear",
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotPriceByYear(filterByYearPricePieceTheme(dataset))
 plotPriceByYear <- function(dataset, dom="priceByYear",
     xAxisLabel="Year", yAxisLabel="Price") {
   tooltipContent <- "#! function(key, x, y, e) {
@@ -521,6 +570,9 @@ plotPriceByYear <- function(dataset, dom="priceByYear",
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotPiecesByYearAvg(groupByPieceAvg(dataset))
 plotPiecesByYearAvg <- function(dataset, dom="piecesByYearAvg",
     xAxisLabel="Year", yAxisLabel="Number of Pieces") {
   piecesByYearAvg <- nPlot(avg ~ year, data=dataset, type="lineChart", dom=dom, width=600)
@@ -540,6 +592,9 @@ plotPiecesByYearAvg <- function(dataset, dom="piecesByYearAvg",
 #' @keywords lego
 #' @export
 #' @importFrom rCharts nPlot
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' plotPiecesByThemeAvg(groupByPieceThemeAvg(dataset))
 plotPiecesByThemeAvg <- function(dataset, dom="piecesByThemeAvg",
     xAxisLabel="Themes", yAxisLabel="Number of Pieces") {
   piecesByThemeAvg <- nPlot(avgPieces ~ theme, data=dataset, type="multiBarChart",
@@ -551,12 +606,58 @@ plotPiecesByThemeAvg <- function(dataset, dom="piecesByThemeAvg",
   piecesByThemeAvg
 }
 
-#' Run the shiny application.
+#' plot - wrapper for all of the interactive plot functionality. See the examples for usage & parameters.
+#' @param dataset the dataset.
+#' @param type the type of ggplot to create - can be one of 'year', 'piece', 'price', 'theme', 'piece_ind', 'price_ind', piece_avg', piece_theme_avg'.
+#' @return the plot.
 #' @keywords lego
 #' @export
-#' @importFrom shiny runApp
-runShinyLego <- function() {
-  shiny::runApp(system.file('shiny', package='lego'))
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' # Plot the number of sets by year.
+#' plotLego(dataset, 'year')
+#' Sys.sleep(1.25)
+#' # Plot the number of pieces by year.
+#' plotLego(dataset, 'piece')
+#' Sys.sleep(1.25)
+#' # Plot the price by year.
+#' plotLego(dataset, 'price')
+#' Sys.sleep(1.25)
+#' # Plot the number of themes by year.
+#' plotLego(dataset, 'theme')
+#' Sys.sleep(1.25)
+#' # Plot the number of pieces for each individual set by year.
+#' plotLego(dataset, 'piece_ind')
+#' Sys.sleep(1.25)
+#' # Plot the price for each individual set by year.
+#' plotLego(dataset, 'price_ind')
+#' Sys.sleep(1.25)
+#' # Plot the average number of pieces by year.
+#' plotLego(dataset, 'piece_avg')
+#' Sys.sleep(1.25)
+#' # Plot the average number of pieces by theme.
+#' plotLego(dataset, 'piece_theme_avg')
+plotLego <- function(dataset, type) {
+  if (type == 'year') {
+    plot <- plotSetsCountByYear(groupBy(dataset, type))
+  } else if (type == 'piece') {
+    plot <- plotPiecesCountByYear(groupBy(dataset, type))
+  } else if (type == 'price') {
+    plot <- plotPriceCountByYear(groupBy(dataset, type))
+  } else if (type == 'theme') {
+    plot <- plotThemesCountByYear(groupBy(dataset, type))
+  } else if (type == 'piece_ind') {
+    plot <- plotPiecesByYear(filterByYearPricePieceTheme(dataset))
+  } else if (type == 'price_ind') {
+    plot <- plotPriceByYear(filterByYearPricePieceTheme(dataset))
+  } else if (type == 'piece_avg') {
+    plot <- plotPiecesByYearAvg(groupBy(dataset, type))
+  } else if (type == 'piece_theme_avg') {
+    plot <- plotPiecesByThemeAvg(groupBy(dataset, type))
+  } else {
+    plot <- plotSetsCountByYear(groupBy(dataset))
+  }
+  plot
 }
 
 #' Ggplot count by group
@@ -768,4 +869,21 @@ ggplotLego <- function(dataset, type) {
     plot <- ggplotSetsCountByYear(groupBy(dataset))
   }
   plot
+}
+
+#' Run the shiny application.
+#' @keywords lego
+#' @export
+#' @importFrom shiny runApp
+#' @examples
+#' ## Only run this example in interactive R sessions
+#' if (interactive()) {
+#'   # run with Darren's default dataset
+#'   runShinyLego()
+#'   # supply your own dataset by saving it to the variable lego_data.
+#'   lego_data <- read.lego(system.file('extdata', 'sets.csv', package ='lego'))
+#'   runShinyLego()
+#' }
+runShinyLego <- function() {
+  shiny::runApp(system.file('shiny', package='lego'))
 }

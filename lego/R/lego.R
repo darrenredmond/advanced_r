@@ -85,8 +85,8 @@ deployToShiny <- function() {
 #examples()
 
 #lego_data <- read.lego(system.file('extdata', 'sets.csv', package ='lego'))
-
 #runShinyLego()
+#rm(lego_data)
 
 #if (!require('lego')) install.packages('lego')
 #library(lego)
@@ -96,3 +96,5 @@ deployToShiny <- function() {
 #browseVignettes()
 
 #lego_data <- lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+
+#example(plotLego)

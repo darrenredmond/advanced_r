@@ -22,4 +22,8 @@ the themesByYear plot.
 \description{
 Plot number of themes by year.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+plotThemesCountByYear(groupByTheme(dataset))
+}
 \keyword{lego}

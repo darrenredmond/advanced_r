@@ -22,4 +22,8 @@ the setsByYear plot.
 \description{
 Plot number of sets by year
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+plotSetsCountByYear(groupByYear(dataset))
+}
 \keyword{lego}

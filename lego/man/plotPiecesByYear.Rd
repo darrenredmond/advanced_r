@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper.R
 \name{plotPiecesByYear}
 \alias{plotPiecesByYear}
-\title{Plot number of pieces by year.}
+\title{Plot number of pieces by year for each individual set.}
 \usage{
 plotPiecesByYear(dataset, dom = "piecesByYear", xAxisLabel = "Year",
   yAxisLabel = "Number of Pieces")
@@ -20,6 +20,10 @@ plotPiecesByYear(dataset, dom = "piecesByYear", xAxisLabel = "Year",
 the piecesByYear plot.
 }
 \description{
-Plot number of pieces by year.
+Plot number of pieces by year for each individual set.
+}
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+plotPiecesByYear(filterByYearPricePieceTheme(dataset))
 }
 \keyword{lego}

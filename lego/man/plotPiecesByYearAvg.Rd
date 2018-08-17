@@ -22,4 +22,8 @@ the themesByYear plot.
 \description{
 Plot the average number of pieces by year.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+plotPiecesByYearAvg(groupByPieceAvg(dataset))
+}
 \keyword{lego}

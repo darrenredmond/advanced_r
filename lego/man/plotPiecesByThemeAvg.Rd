@@ -22,4 +22,8 @@ the piecesByThemeAvg plot.
 \description{
 Plot number of average pieces by theme
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+plotPiecesByThemeAvg(groupByPieceThemeAvg(dataset))
+}
 \keyword{lego}

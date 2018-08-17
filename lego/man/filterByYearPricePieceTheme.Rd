@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper.R
 \name{filterByYearPricePieceTheme}
 \alias{filterByYearPricePieceTheme}
-\title{Filter dataset by year, price, number of pieces and theme}
+\title{Filter dataset by year, price, number of pieces, theme, and subtheme.}
 \usage{
 filterByYearPricePieceTheme(dataset, minYear = min(dataset$year),
   maxYear = max(dataset$year), minPrice = min(dataset$price),
@@ -34,7 +34,7 @@ filterByYearPricePieceTheme(dataset, minYear = min(dataset$year),
 the filtered dataset with the filter parameters applied.
 }
 \description{
-Filter dataset by year, price, number of pieces and theme
+Filter dataset by year, price, number of pieces, theme, and subtheme.
 }
 \examples{
 dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))

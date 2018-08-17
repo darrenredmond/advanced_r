@@ -6,10 +6,10 @@ library(shiny)
 
 if (!require('lego')) install.packages('lego')
 library(lego)
-#source("helper.R")
 
 # Load data processing file
-if (exists("lego_data") == F) {
+if (!exists("lego_data")) {
+  print('Loading Default Data File')
   lego_data <- lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
 }
 

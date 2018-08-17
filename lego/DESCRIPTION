@@ -1,8 +1,17 @@
 Package: lego 
-Title: Darren's Lego - Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file
+Title: Darren Redmond's Lego Set Explorer - Visualises A Brickset CSV File Providing Filter, Group By, Shiny App, GGPlots, and Interactive Graphs
 Version: 1.0.0
 Authors@R: person("Darren", "Redmond", email = "darren.redmond@gmail.com", role = c("aut", "cre"))
-Description: Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
+Description: Darren Redmond's Lego Set Explorer.
+    Provides helper functions, shiny app, plots/graphs, and statistics for a Brickset exported lego csv file.
+    The main functions are the read.lego, filterByYearPricePieceTheme (filterBy), groupBy, plotLego, ggPlotLego, runShinyLego.
+    The vignette, help, example files describe all of the functionality in greater detail.
+    There is a Shiny App which ties all of the functionality together and tracks Darren Redmond's lego collection and combines the lego sample app's charts with brickset's native charts to allow searching and visulizating of LEGO Sets information from his first set bought to his most current.
+    The total number of set records is 402 and counting in 18 different themes, the main one being Star Wars.
+    The dataset is sets owned by Darren Redmond tracked on Brickset.com, and it contains the basic information of each set (set id, year, number of pieces, theme, set name, sub theme, price paid, number of mini figures).
+    Data Source: https://brickset.com/sets/ownedby-darrenredmond.
+    Source Code: https://github.com/darrenredmond/advanced_r/lego.
+    Helped by Shiny Sample Application at https://shiny.rstudio.com/gallery/lego-set.html.
 Depends: R (>= 3.5.0)
 License: MIT + file LICENSE
 Encoding: UTF-8

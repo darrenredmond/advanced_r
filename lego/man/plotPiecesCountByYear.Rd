@@ -22,4 +22,8 @@ the piecesCountByYear plot.
 \description{
 Plot number of pieces by year.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+plotPiecesCountByYear(groupByPiece(dataset))
+}
 \keyword{lego}

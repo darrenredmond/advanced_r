@@ -9,7 +9,7 @@ ggplotLego(dataset, type)
 \arguments{
 \item{dataset}{the dataset.}
 
-\item{type}{the type of ggplot to create - can be one of 'year', 'piece', 'price', 'theme', 'piece_theme'.}
+\item{type}{the type of ggplot to create - can be one of 'year', 'piece', 'price', 'theme', 'piece_theme_avg'.}
 }
 \value{
 the plot.
@@ -23,5 +23,6 @@ ggplotLego(dataset, 'year')
 ggplotLego(dataset, 'piece')
 ggplotLego(dataset, 'price')
 ggplotLego(dataset, 'theme')
+ggplotLego(dataset, 'piece_theme_avg')
 }
 \keyword{lego}

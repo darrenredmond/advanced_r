@@ -9,4 +9,14 @@ runShinyLego()
 \description{
 Run the shiny application.
 }
+\examples{
+## Only run this example in interactive R sessions
+if (interactive()) {
+  # run with Darren's default dataset
+  runShinyLego()
+  # supply your own dataset by saving it to the variable lego_data.
+  lego_data <- read.lego(system.file('extdata', 'sets.csv', package ='lego'))
+  runShinyLego()
+}
+}
 \keyword{lego}

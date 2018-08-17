@@ -4,13 +4,13 @@
 if (!require('shiny')) install.packages('shiny')
 library(shiny)
 
-#if (!require('lego')) install.packages('lego')
-#library(lego)
+if (!require('lego')) install.packages('lego')
+library(lego)
 #source("helper.R")
 
 # Load data processing file
 if (exists("lego_data") == F) {
-  lego_data <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+  lego_data <- lego::read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
 }
 
 # get the unique lego themes that I own and sort them alphabetically for the left hand side subselection.
@@ -31,12 +31,12 @@ shinyServer(
 
     # Create event type checkbox
     output$themesControl <- renderUI({
-      checkboxGroupInput('themes', 'LEGO Themes:', themes, selected = values$themes)
+      checkboxGroupInput('themes', 'LEGO Themes:', themes, selected=values$themes)
     })
 
     # Create event type checkbox
     output$subthemesControl <- renderUI({
-      checkboxGroupInput('subthemes', 'LEGO SubThemes:', subthemes, selected = values$subthemes)
+      checkboxGroupInput('subthemes', 'LEGO SubThemes:', subthemes, selected=values$subthemes)
     })
 
     # Add observer on select-all button
@@ -65,47 +65,47 @@ shinyServer(
 
     # Prepare datasets for the different graphs
     dataTable <- reactive({
-      filterByYearPricePieceTheme(lego_data, input$timeline[1], input$timeline[2],
+      lego::filterByYearPricePieceTheme(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableByPiecesYear <- reactive({
-      groupByPiece(lego_data, input$timeline[1], input$timeline[2],
+      lego::groupByPiece(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableByPriceYear <- reactive({
-      groupByPrice(lego_data, input$timeline[1], input$timeline[2],
+      lego::groupByPrice(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableBySetYear <- reactive({
-      groupByYear(lego_data, input$timeline[1], input$timeline[2],
+      lego::groupByYear(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableByThemeYear <- reactive({
-      groupByTheme(lego_data, input$timeline[1], input$timeline[2],
+      lego::groupByTheme(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableByPiece <- reactive({
-      filterByYearPricePieceTheme(lego_data, input$timeline[1], input$timeline[2],
+      lego::filterByYearPricePieceTheme(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableByPrice <- reactive({
-      filterByYearPricePieceTheme(lego_data, input$timeline[1], input$timeline[2],
+      lego::filterByYearPricePieceTheme(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableByPieceAvg <- reactive({
-      groupByPieceAvg(lego_data, input$timeline[1], input$timeline[2],
+      lego::groupByPieceAvg(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
     dataTableByPieceThemeAvg <- reactive({
-      groupByPieceThemeAvg(lego_data, input$timeline[1], input$timeline[2],
+      lego::groupByPieceThemeAvg(lego_data, input$timeline[1], input$timeline[2],
         input$price[1], input$price[2], input$pieces[1], input$pieces[2], input$themes, input$subthemes)
     })
 
@@ -115,35 +115,35 @@ shinyServer(
     })
 
     output$setsByYear <- renderChart({
-      plotSetsCountByYear(dataTableBySetYear())
+      lego::plotSetsCountByYear(dataTableBySetYear())
     })
 
     output$priceCountByYear <- renderChart({
-      plotPriceCountByYear(dataTableByPriceYear())
+      lego::plotPriceCountByYear(dataTableByPriceYear())
     })
 
     output$piecesCountByYear <- renderChart({
-      plotPiecesCountByYear(dataTableByPiecesYear())
+      lego::plotPiecesCountByYear(dataTableByPiecesYear())
     })
 
     output$themesByYear <- renderChart({
-      plotThemesCountByYear(dataTableByThemeYear())
+      lego::plotThemesCountByYear(dataTableByThemeYear())
     })
 
     output$piecesByYear <- renderChart({
-      plotPiecesByYear(dataTableByPiece())
+      lego::plotPiecesByYear(dataTableByPiece())
     })
 
     output$priceByYear <- renderChart({
-      plotPriceByYear(dataTableByPrice())
+      lego::plotPriceByYear(dataTableByPrice())
     })
 
     output$piecesByYearAvg <- renderChart({
-      plotPiecesByYearAvg(dataTableByPieceAvg())
+      lego::plotPiecesByYearAvg(dataTableByPieceAvg())
     })
 
     output$piecesByThemeAvg <- renderChart({
-      plotPiecesByThemeAvg(dataTableByPieceThemeAvg())
+      lego::plotPiecesByThemeAvg(dataTableByPieceThemeAvg())
     })
 
   }

@@ -18,8 +18,8 @@ if (!require('dplyr')) install.packages('dplyr')
 library(dplyr)
 if (!require('DT')) install.packages('DT')
 library(DT)
-#if (!require('lego')) install.packages('lego')
-#library(lego)
+if (!require('lego')) install.packages('lego')
+library(lego)
 
 # create the shiny ui.
 shinyUI(
@@ -30,23 +30,25 @@ shinyUI(
       # define the sidebar panel.
       sidebarPanel(
         # add a timeline slide input for the years the lego set were released.
-        sliderInput("timeline", "Timeline:", sep = "", min = 2006, max = 2018, value = c(2006, 2018)),
+        sliderInput("timeline", "Timeline:", sep="", min=min(lego_data$year), max=max(lego_data$year),
+            value=c(min(lego_data$year), max(lego_data$year))),
         # add a price slide input for the years the lego set were released.
-        sliderInput("price", "Price:", min = 0, max = 1000, value = c(0, 1000)),
+        sliderInput("price", "Price:", min=min(lego_data$price), max=max(lego_data$price), value=c(min(lego_data$price), max(lego_data$price))),
         # add a pieces slide input for the number of pieces in each lego set.
-        sliderInput("pieces", "Number of Pieces:", sep = "", min = 100, max = 7541, value = c(100, 7541)),
+        sliderInput("pieces", "Number of Pieces:", sep="", min=100, max=max(lego_data$pieces),
+            value=c(100, max(lego_data$pieces))),
         # the id
         uiOutput("themesControl"),
         # add a clear all selection action button
-        actionButton(inputId = "clearAll", label = "Clear selection", icon = icon("square-o")),
+        actionButton(inputId="clearAll", label="Clear selection", icon=icon("square-o")),
         # add a select all action button
-        actionButton(inputId = "selectAll", label = "Select all", icon = icon("check-square-o")),
+        actionButton(inputId="selectAll", label="Select all", icon=icon("check-square-o")),
         # the id
         uiOutput("subthemesControl"),
         # add a clear all selection action button
-        actionButton(inputId = "clearAllSub", label = "Clear selection", icon = icon("square-o")),
+        actionButton(inputId="clearAllSub", label="Clear selection", icon=icon("square-o")),
         # add a select all action button
-        actionButton(inputId = "selectAllSub", label = "Select all", icon = icon("check-square-o"))
+        actionButton(inputId="selectAllSub", label="Select all", icon=icon("check-square-o"))
       ),
       # define the main panel for the results output.
       mainPanel(
@@ -56,27 +58,27 @@ shinyUI(
           tabPanel(p(icon("table"), "Dataset"), dataTableOutput(outputId="dTable")),
           # The tab panel to display all of the graphs.
           tabPanel(p(icon("line-chart"), "Graphs"),
-            h4('Number of Sets by Year', align = "center"),
+            h4('Number of Sets by Year', align="center"),
             h5('Please hover over each point to see the Year and Total Number of Sets.', align ="center"),
             showOutput("setsByYear", "nvd3"),
-            h4('Price by Year', align = "center"),
+            h4('Price by Year', align="center"),
             h5('Please hover over each point to see the Year and Total Price Spent.', align ="center"),
             showOutput("priceCountByYear", "nvd3"),
-            h4('Number of Pieces by Year', align = "center"),
+            h4('Number of Pieces by Year', align="center"),
             h5('Please hover over each point to see the Year and Total Number of Pieces.', align ="center"),
             showOutput("piecesCountByYear", "nvd3"),
-            h4('Number of Themes by Year', align = "center"),
+            h4('Number of Themes by Year', align="center"),
             h5('Please hover over each bar to see the Year and Total Number of Themes.', align ="center"),
             showOutput("themesByYear", "nvd3"),
-            h4('Number of Pieces by Year', align = "center"),
+            h4('Number of Pieces by Year', align="center"),
             h5('Please hover over each point to see the Set Name, ID and Theme.', align ="center"),
             showOutput("piecesByYear", "nvd3"),
-            h4('Price by Year', align = "center"),
+            h4('Price by Year', align="center"),
             h5('Please hover over each point to see the Set Name, ID and Theme.', align ="center"),
             showOutput("priceByYear", "nvd3"),
-            h4('Average Number of Pieces by Year', align = "center"),
+            h4('Average Number of Pieces by Year', align="center"),
             showOutput("piecesByYearAvg", "nvd3"),
-            h4('Average Number of Pieces by Theme', align = "center"),
+            h4('Average Number of Pieces by Theme', align="center"),
             showOutput("piecesByThemeAvg", "nvd3")
           )
         )

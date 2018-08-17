@@ -44,8 +44,11 @@ ensureColumn <- function(dataset, oldName, name) {
 #' @export
 #' @importFrom data.table fread
 #' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' all_dataset <- read.lego(system.file('extdata', 'sets.csv', package ='lego'))
 read.lego <- function(file) {
-  dataset <- fread(file,fill=TRUE)
+  dataset <- fread(file, fill=TRUE)
   ensureColumn(dataset, 'Theme', 'theme')
   ensureColumn(dataset, 'Subtheme', 'subtheme')
   ensureColumn(dataset, 'SetName', 'name')
@@ -56,6 +59,7 @@ read.lego <- function(file) {
   dataset <- dataset[,c('theme','name','setId','year','pieces','price','subtheme')]
   dataset$pieces[is.na(dataset$pieces)] <- 0
   dataset$price[is.na(dataset$price)] <- 0
+  dataset$subtheme[is.na(dataset$subtheme)] <- ''
   dataset
 }
 
@@ -115,14 +119,14 @@ filterByYearPricePieceTheme <- function(dataset,
 
 #' Group by year and summarise by set.
 #' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
-#' @param minPrice the minimum price count.
-#' @param maxPrice the maximum price count.
-#' @param minPieces the minimum piece count.
-#' @param maxPieces the maximum piece count.
-#' @param themes the themes to include in the filtered dataset.
-#' @param subthemes the subthemes to include in the filtered dataset.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
 #' @return the filtered dataset with the filters applied.
 #' @keywords lego
 #' @export
@@ -152,14 +156,14 @@ groupByYear <- function(dataset,
 
 #' Group by year to get total count of pieces.
 #' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
-#' @param minPrice the minimum price count.
-#' @param maxPrice the maximum price count.
-#' @param minPieces the minimum piece count.
-#' @param maxPieces the maximum piece count.
-#' @param themes the themes to include in the filtered dataset.
-#' @param subthemes the subthemes to include in the filtered dataset.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
 #' @return data.table 2 columns
 #' @keywords lego
 #' @export
@@ -188,14 +192,14 @@ groupByPiece <- function(dataset,
 
 #' Group by year to get total price.
 #' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
-#' @param minPrice the minimum price count.
-#' @param maxPrice the maximum price count.
-#' @param minPieces the minimum piece count.
-#' @param maxPieces the maximum piece count.
-#' @param themes the themes to include in the filtered dataset.
-#' @param subthemes the subthemes to include in the filtered dataset.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
 #' @return data.table 2 columns
 #' @keywords lego
 #' @export
@@ -224,14 +228,14 @@ groupByPrice <- function(dataset,
 
 #' Group by year to get the number of themes.
 #' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
-#' @param minPrice the minimum price count.
-#' @param maxPrice the maximum price count.
-#' @param minPieces the minimum piece count.
-#' @param maxPieces the maximum piece count.
-#' @param themes the themes to include in the filtered dataset.
-#' @param subthemes the subthemes to include in the filtered dataset.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
 #' @return the filtered dataset with the filters applied.
 #' @keywords lego
 #' @export
@@ -256,14 +260,14 @@ groupByTheme <- function(dataset,
 
 #' Aggregate dataset by year to get total count of average number of pieces.
 #' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
-#' @param minPrice the minimum price count.
-#' @param maxPrice the maximum price count.
-#' @param minPieces the minimum piece count.
-#' @param maxPieces the maximum piece count.
-#' @param themes the themes to include in the filtered dataset.
-#' @param subthemes the subthemes to include in the filtered dataset.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
 #' @return data.table 2 columns
 #' @keywords lego
 #' @export
@@ -272,6 +276,12 @@ groupByTheme <- function(dataset,
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' groupByPieceAvg(dataset)
+#' groupByPieceAvg(dataset, themes=c('Star Wars'))
+#' groupByPieceAvg(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+#' groupByPieceAvg(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
 #'
 groupByPieceAvg <- function(dataset,
     minYear=min(dataset$year), maxYear=max(dataset$year),
@@ -286,14 +296,14 @@ groupByPieceAvg <- function(dataset,
 
 #' Average pieces for each theme.
 #' @param dataset the dataset.
-#' @param minYear the minimum year.
-#' @param maxYear the maximum year.
-#' @param minPrice the minimum price count.
-#' @param maxPrice the maximum price count.
-#' @param minPieces the minimum piece count.
-#' @param maxPieces the maximum piece count.
-#' @param themes the themes to include in the filtered dataset.
-#' @param subthemes the subthemes to include in the filtered dataset.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
 #' @return data.table 2 columns
 #' @keywords lego
 #' @export
@@ -302,6 +312,12 @@ groupByPieceAvg <- function(dataset,
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' groupByPieceThemeAvg(dataset)
+#' groupByPieceThemeAvg(dataset, themes=c('Star Wars'))
+#' groupByPieceThemeAvg(dataset, 2010, 2016, 5, 10, 100, 1000, c('Star Wars'), c('Episode I'))
+#' groupByPieceThemeAvg(dataset, 2014, 2015, themes=c('Star Wars'), subthemes=c('Episode I'))
 #'
 groupByPieceThemeAvg <- function(dataset,
     minYear=min(dataset$year), maxYear=max(dataset$year),
@@ -312,6 +328,49 @@ groupByPieceThemeAvg <- function(dataset,
     group_by(.data$theme) %>%
     summarise(avgPieces=round(mean(.data$pieces), 2)) %>%
     arrange(.data$theme)
+}
+
+#' Group By wrapper function to call each of the subfunctions simply.
+#' @param dataset the dataset.
+#' @param type the type to group by - can be one of 'year', 'piece', 'price', 'theme', 'piece_avg', 'piece_theme_avg'.
+#' @param minYear the minimum year. Defaults to be minimum year in the dataset.
+#' @param maxYear the maximum year. Defaults to be maximum year in the dataset.
+#' @param minPrice the minimum price count. Defaults to be minimum price in the dataset.
+#' @param maxPrice the maximum price count. Defaults to be maximum price in the dataset.
+#' @param minPieces the minimum piece count. Defaults to be minimum piece count in the dataset.
+#' @param maxPieces the maximum piece count. Defaults to be maximum piece count in the dataset.
+#' @param themes the themes to include in the filtered dataset. Defaults to be all themes.
+#' @param subthemes the subthemes to include in the filtered dataset. Defaults to be all subthemes.
+#' @return data.table 2 columns
+#' @keywords lego
+#' @export
+#' @importFrom dplyr arrange
+#' @importFrom dplyr group_by
+#' @importFrom dplyr summarise
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' groupBy(dataset, 'theme')
+#' groupBy(dataset, 'piece', themes=c('Star Wars'))
+#' groupBy(dataset, 'year', 2010, 2016, 5, 100, 1, 1000, c('Star Wars'), c('Episode I'))
+#' groupBy(dataset, 'price', 2010, 2016, themes=c('Star Wars'), subthemes=c('Episode I'))
+#'
+groupBy <- function(dataset, type,
+    minYear=min(dataset$year), maxYear=max(dataset$year),
+    minPrice=min(dataset$price), maxPrice=max(dataset$price),
+    minPieces=min(dataset$pieces), maxPieces=max(dataset$pieces),
+    themes=sort(unique(dataset$theme)), subthemes=sort(unique(dataset$subtheme))) {
+  # switch based on type to call the appropriate function.
+  switch(type,
+      year=groupByYear(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
+      piece=groupByPiece(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
+      price=groupByPrice(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
+      theme=groupByTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
+      piece_avg=groupByPieceAvg(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
+      piece_theme_avg=groupByPieceThemeAvg(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
+      groupByYear(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes)
+  )
 }
 
 #' Plot number of sets by year

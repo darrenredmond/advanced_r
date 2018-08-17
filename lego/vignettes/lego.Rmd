@@ -47,6 +47,8 @@ knitr::kable(head(data))
 
 So it can be seen that we have loaded in a dataset with 7 columns, theme, name, setId, year, pieces, price, subthem.
 
+You can load in your own csv dataset - the headings of the csv file should be `Number,Year,Pieces,Theme,SetName,USPrice,Subtheme`
+
 ## Filtering Data
 
 The first function created is the function to filter by year. This can be used to filter sets between a year range.
@@ -138,29 +140,76 @@ To see the average number of pieces for each themes in the dataset the following
 knitr::kable(head(groupByPieceThemeAvg(data), 15))
 ```
 
+There is also a wrapper function called `groupBy(data, type='year')` which receives a type plus the other parameters as outlined above. The type can be one of 'year', 'price', 'piece', 'theme', 'piece_avg', 'piece_theme_avg'. Defaults to year.
+
+```{r, echo=FALSE, results='asis'}
+knitr::kable(head(groupBy(data, type='year'), 15))
+```
+
 ## Plots
 
-All of the helper functions above are useful for shaping the data to plot the data - so to see some ggplots the following functions were created.
+All of the helper functions above are useful for shaping the data to plot the data
 
-```{r, fig.show='hold', echo=TRUE}
+### GGPlots
+
+To see some ggplots the following functions were created.
+
+```{r, fig.show='hold', fig.width=5, fig.height=5, echo=TRUE}
 ggplotSetsCountByYear(groupByYear(data))
 ```
 
-```{r, fig.show='hold', echo=TRUE}
+```{r, fig.show='hold', fig.width=5, fig.height=5, echo=TRUE}
 ggplotPiecesCountByYear(groupByPiece(data))
 ```
 
-```{r, fig.show='hold', echo=TRUE}
+```{r, fig.show='hold', fig.width=5, fig.height=5, echo=TRUE}
 ggplotPriceByYear(groupByPrice(data))
 ```
 
-```{r, fig.show='hold', echo=TRUE}
+```{r, fig.show='hold', fig.width=5, fig.height=5, echo=TRUE}
 ggplotThemesCountByYear(groupByTheme(data))
 ```
 
-```{r, fig.show='hold', echo=TRUE}
+```{r, fig.show='hold', fig.width=5, fig.height=5, echo=TRUE}
 ggplotPieceByTheme(groupByPieceThemeAvg(data))
 ```
+
+To see the increase in the number of lego sets and themes that have ever been created and you can see when lego started to release more sets and more themes, you can use the sets.csv file shipped with this package.
+
+```{r, fig.show='hold', fig.width=8, fig.height=8, echo=TRUE}
+sets_data <- read.lego(system.file('extdata', 'sets.csv', package ='lego'))
+ggplotSetsCountByYear(groupByTheme(sets_data, maxYear=2015))
+ggplotThemesCountByYear(groupByTheme(sets_data, maxYear=2015))
+```
+
+### Interactive Charts with RCharts
+
+Interactive charts have also been created using the RCharts library and the following commands will show these.
+
+* `plotSetsCountByYear(groupByYear(data))`
+![](plotSetsCountByYear.png)
+
+* `plotPriceCountByYear(groupByPrice(data))`
+![](plotPriceCountByYear.png)
+
+* `plotPiecesCountByYear(groupByPiece(data))`
+![](plotPiecesCountByYear.png)
+
+* `plotThemesCountByYear(groupByTheme(data))`
+![](plotThemesCountByYear.png)
+
+* `plotPiecesByYear(filterByYearPricePieceTheme(data))`
+![](plotPiecesByYear.png)
+
+* `plotPriceByYear(filterByYearPricePieceTheme(data))`
+![](plotPriceByYear.png)
+
+* `plotPiecesByYearAvg(groupByPieceAvg(data))`
+![](plotPiecesByYearAvg.png)
+* `plotPiecesByThemeAvg(groupByPieceThemeAvg(data))`
+![](plotPiecesByThemeAvg.png)
+
+The interactive versions of these above charts are the ones that are used in the shiny application.
 
 ## Shiny Lego
 
@@ -172,6 +221,13 @@ Note: The shiny app here will only display in the browser and not in the R-Studi
 knitr::include_url("https://darrenredmond.shinyapps.io/shiny/")
 ```
 
+To run the shiny lego app with your dataset you should load in your csv file with read.lego and assign it to a variable lego_data and then when the shiny app starts it will use your dataset instead of Darren's purchased data.
+
+The headings of the csv file should be `Number,Year,Pieces,Theme,SetName,USPrice,Subtheme`
+
+`lego_data <- read.lego('<ENTER_YOUR_CSV_DATA_FILE>')`
+`runShinyLego()`
+
 ## Help
 
 [Vignette Home](index.html)
@@ -182,4 +238,36 @@ knitr::include_url("https://darrenredmond.shinyapps.io/shiny/")
 
 You can check out the examples for each of the functions here.
 
+### Filter
+
 `example(filterByYear)`
+
+`example(filterByYearPricePieceTheme)`
+
+### Group By
+
+`example(groupBy)`
+
+`example(groupByYear)`
+
+`example(groupByPiece)`
+
+`example(groupByPieceAvg)`
+
+`example(groupByPieceThemeAvg)`
+
+`example(groupByPrice)`
+
+`example(groupByTheme)`
+
+### GGPlot
+
+`example(ggplotSetsCountByYear)`
+
+`example(ggplotPiecesCountByYear)`
+
+`example(ggplotPriceByYear)`
+
+`example(ggplotThemesCountByYear)`
+
+`example(ggplotPieceByTheme)`

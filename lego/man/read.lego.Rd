@@ -15,3 +15,7 @@ the lego brickset lego file.
 \description{
 Read a brickset lego file.
 }
+\examples{
+dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+all_dataset <- read.lego(system.file('extdata', 'sets.csv', package ='lego'))
+}

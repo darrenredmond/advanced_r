@@ -14,21 +14,21 @@ groupByPiece(dataset, minYear = min(dataset$year),
 \arguments{
 \item{dataset}{the dataset.}
 
-\item{minYear}{the minimum year.}
+\item{minYear}{the minimum year. Defaults to be minimum year in the dataset.}
 
-\item{maxYear}{the maximum year.}
+\item{maxYear}{the maximum year. Defaults to be maximum year in the dataset.}
 
-\item{minPrice}{the minimum price count.}
+\item{minPrice}{the minimum price count. Defaults to be minimum price in the dataset.}
 
-\item{maxPrice}{the maximum price count.}
+\item{maxPrice}{the maximum price count. Defaults to be maximum price in the dataset.}
 
-\item{minPieces}{the minimum piece count.}
+\item{minPieces}{the minimum piece count. Defaults to be minimum piece count in the dataset.}
 
-\item{maxPieces}{the maximum piece count.}
+\item{maxPieces}{the maximum piece count. Defaults to be maximum piece count in the dataset.}
 
-\item{themes}{the themes to include in the filtered dataset.}
+\item{themes}{the themes to include in the filtered dataset. Defaults to be all themes.}
 
-\item{subthemes}{the subthemes to include in the filtered dataset.}
+\item{subthemes}{the subthemes to include in the filtered dataset. Defaults to be all subthemes.}
 }
 \value{
 data.table 2 columns

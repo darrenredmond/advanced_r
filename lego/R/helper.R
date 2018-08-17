@@ -369,8 +369,7 @@ groupBy <- function(dataset, type,
       theme=groupByTheme(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
       piece_avg=groupByPieceAvg(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
       piece_theme_avg=groupByPieceThemeAvg(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes),
-      groupByYear(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes)
-  )
+      groupByYear(dataset, minYear, maxYear, minPrice, maxPrice, minPieces, maxPieces, themes, subthemes))
 }
 
 #' Plot number of sets by year
@@ -739,4 +738,34 @@ ggplotPieceByTheme <- function(dataset, title="Avg Num of Pieces by Theme",
     xAxisLabel="Theme", yAxisLabel="Avg Num of Pieces",
     caption="Source: Darren Redmond's owned dataset") {
   ggplotCountByGroupDiscrete(dataset, title, xAxisLabel, yAxisLabel, caption, x=dataset$theme, y=dataset$avgPieces)
+}
+
+#' ggplot - wrapper for all of the ggplot functionality.
+#' @param dataset the dataset.
+#' @param type the type of ggplot to create - can be one of 'year', 'piece', 'price', 'theme', 'piece_theme_avg'.
+#' @return the plot.
+#' @keywords lego
+#' @export
+#' @examples
+#' dataset <- read.lego(system.file('extdata', 'brickset-mysets-owned.csv', package ='lego'))
+#' ggplotLego(dataset, 'year')
+#' ggplotLego(dataset, 'piece')
+#' ggplotLego(dataset, 'price')
+#' ggplotLego(dataset, 'theme')
+#' ggplotLego(dataset, 'piece_theme_avg')
+ggplotLego <- function(dataset, type) {
+  if (type == 'year') {
+    plot <- ggplotSetsCountByYear(groupBy(dataset, type))
+  } else if (type == 'piece') {
+    plot <- ggplotPiecesCountByYear(groupBy(dataset, type))
+  } else if (type == 'price') {
+    plot <- ggplotPriceByYear(groupBy(dataset, type))
+  } else if (type == 'theme') {
+    plot <- ggplotThemesCountByYear(groupBy(dataset, type))
+  } else if (type == 'piece_theme_avg') {
+    plot <- ggplotPieceByTheme(groupBy(dataset, type))
+  } else {
+    plot <- ggplotSetsCountByYear(groupBy(dataset))
+  }
+  plot
 }

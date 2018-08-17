@@ -100,6 +100,8 @@ This function is used extensively in the shiny application developed in this pac
 
 Next I started to think of summary statistics and grouping the data by various fields so some helper groupBy functions were created.
 
+### Year
+
 To see the number of sets in each year in the dataset the following can be run:
 
 `groupByYear(data)`
@@ -107,6 +109,8 @@ To see the number of sets in each year in the dataset the following can be run:
 ```{r, echo=FALSE, results='asis'}
 knitr::kable(head(groupByYear(data), 15))
 ```
+
+### Piece
 
 To see the number of pieces in each year in the dataset the following can be run:
 
@@ -116,6 +120,8 @@ To see the number of pieces in each year in the dataset the following can be run
 knitr::kable(head(groupByPiece(data), 15))
 ```
 
+### Price
+
 To see the price for each year in the dataset the following can be run:
 
 `groupByPrice(data)`
@@ -123,6 +129,8 @@ To see the price for each year in the dataset the following can be run:
 ```{r, echo=FALSE, results='asis'}
 knitr::kable(head(groupByPrice(data), 15))
 ```
+
+### Theme
 
 To see the number of themes for each year in the dataset the following can be run:
 
@@ -132,6 +140,8 @@ To see the number of themes for each year in the dataset the following can be ru
 knitr::kable(head(groupByTheme(data), 15))
 ```
 
+### Average Number of Pieces Per Theme
+
 To see the average number of pieces for each themes in the dataset the following can be run:
 
 `groupByPieceThemeAvg(data)`
@@ -139,6 +149,8 @@ To see the average number of pieces for each themes in the dataset the following
 ```{r, echo=FALSE, results='asis'}
 knitr::kable(head(groupByPieceThemeAvg(data), 15))
 ```
+
+### Group By (Parameterised)
 
 There is also a wrapper function called `groupBy(data, type='year')` which receives a type plus the other parameters as outlined above. The type can be one of 'year', 'price', 'piece', 'theme', 'piece_avg', 'piece_theme_avg'. Defaults to year.
 
@@ -181,6 +193,14 @@ sets_data <- read.lego(system.file('extdata', 'sets.csv', package ='lego'))
 ggplotSetsCountByYear(groupByTheme(sets_data, maxYear=2015))
 ggplotThemesCountByYear(groupByTheme(sets_data, maxYear=2015))
 ```
+
+There is also a wrapper function called `ggplotLego` to simplify the calling of the ggplot which will have the axis, titles, and captions preset.
+
+`ggplotLego(dataset, 'year')`
+`ggplotLego(dataset, 'piece')`
+`ggplotLego(dataset, 'price')`
+`ggplotLego(dataset, 'theme')`
+`ggplotLego(dataset, 'piece_theme_avg')`
 
 ### Interactive Charts with RCharts
 
@@ -261,6 +281,8 @@ You can check out the examples for each of the functions here.
 `example(groupByTheme)`
 
 ### GGPlot
+
+`example(ggplotLego)`
 
 `example(ggplotSetsCountByYear)`
 
